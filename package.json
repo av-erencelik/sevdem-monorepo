@@ -18,5 +18,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "drizzle-kit": "^0.17.6-76e73f3"
+  }
 }
