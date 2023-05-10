@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Sevdem Maya - Ekşi Maya Ekmek",
+  title: "Sevdem Maya - Admin",
   description:
     "Sevdem Maya, doğal ve lezzetli ekşi maya ekmeklerinin adresi. Tamamen doğal malzemelerle ürettiğimiz ekmeklerimiz, sağlıklı ve besleyici bir alternatif sunar. Siz de eşsiz tadımızı keşfedin ve sağlıklı bir beslenme için Sevdem Maya'yı tercih edin.",
 };

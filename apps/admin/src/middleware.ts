@@ -17,7 +17,7 @@ const ratelimit = new Ratelimit({
 export default authMiddleware({
   beforeAuth: async (req, evt) => {
     const ip = req.ip ?? "127.0.0.1";
-    if (req.nextUrl.pathname.startsWith("/api") || req.nextUrl.pathname.startsWith("/admin")) {
+    if (req.nextUrl.pathname.startsWith("/api") || req.nextUrl.pathname.startsWith("/")) {
       const { success } = await ratelimit.limit(ip);
       if (!success) {
         return NextResponse.redirect(new URL("/blocked", req.url));
@@ -25,22 +25,22 @@ export default authMiddleware({
     }
   },
   afterAuth(auth, req, evt) {
-    const isAuthPage = req.nextUrl.pathname.startsWith("/admin/giris");
+    const isAuthPage = req.nextUrl.pathname.startsWith("/giris");
     const { userId } = auth;
     if (!isAuthPage) {
       if (!userId) {
-        return NextResponse.redirect(new URL("/admin/giris", req.url));
+        return NextResponse.redirect(new URL("/giris", req.url));
       } else {
         return NextResponse.next();
       }
     } else {
       if (userId) {
-        return NextResponse.redirect(new URL("/admin", req.url));
+        return NextResponse.redirect(new URL("/", req.url));
       }
     }
   },
 });
 
 export const config = {
-  matcher: ["/admin/:path*", "/admin"],
+  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
