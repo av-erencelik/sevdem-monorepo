@@ -5,7 +5,7 @@
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext", "ES2016"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -16,10 +16,7 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "jsx": "preserve"
   },
   "include": ["src", "next-env.d.ts"],
   "exclude": ["node_modules"]
