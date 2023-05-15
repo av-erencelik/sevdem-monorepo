@@ -20,6 +20,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "@types/react": "^18.2.6",
     "drizzle-kit": "^0.17.6-76e73f3"
   }
 }
