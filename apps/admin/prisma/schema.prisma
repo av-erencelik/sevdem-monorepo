@@ -1,0 +1,201 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model ConversionFactors {
+  id               Int             @id @unique(map: "id") @default(autoincrement())
+  fromUnitId       Int
+  fromUnit         MeasurementUnit @relation(fields: [fromUnitId], references: [id], name: "fromUnit")
+  toUnitId         Int
+  toUnit           MeasurementUnit @relation(fields: [toUnitId], references: [id], name: "toUnit")
+  conversionFactor Decimal         @db.Decimal(10, 4)
+
+  @@index([fromUnitId])
+  @@index([toUnitId])
+  @@map("conversion_factors")
+}
+
+model CreatedItem {
+  id           Int      @id @unique(map: "id") @default(autoincrement())
+  recipeId     Int
+  recipe       Recipe   @relation(fields: [recipeId], references: [id])
+  yieldCreated Int
+  createdAt    DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([recipeId])
+  @@map("created_item")
+}
+
+model ExternalCost {
+  id        Int      @id @unique(map: "id") @default(autoincrement())
+  name      String   @db.VarChar(255)
+  cost      Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+
+  @@map("external_cost")
+}
+
+model Ingredient {
+  id               Int                   @id @unique(map: "id") @default(autoincrement())
+  name             String                @db.VarChar(255)
+  price            Price[]
+  inventory        IngredientInventory[]
+  recipeIngredient RecipeIngredient[]
+  orderItem        OrderItem[]
+  createdAt        DateTime              @default(now()) @db.Timestamp(0)
+  updatedAt        DateTime              @updatedAt @db.Timestamp(0)
+
+  @@map("ingredient")
+}
+
+model IngredientInventory {
+  id           Int        @id @unique(map: "id") @default(autoincrement())
+  ingredientId Int
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  quantity     Decimal    @db.Decimal(10, 2)
+
+  @@index([ingredientId])
+  @@map("ingredient_inventory")
+}
+
+model Measurement {
+  id       Int             @id @unique(map: "id") @default(autoincrement())
+  priceId  Int             @unique(map: "price__idx")
+  price    Price           @relation(fields: [priceId], references: [id])
+  unitId   Int
+  unit     MeasurementUnit @relation(fields: [unitId], references: [id])
+  size     Decimal         @db.Decimal(10, 2)
+  quantity Decimal         @db.Decimal(10, 2)
+  mlToGram Decimal?        @db.Decimal(10, 4)
+
+  @@index([unitId])
+  @@map("measurement")
+}
+
+model MeasurementType {
+  id   Int               @id @unique(map: "id") @default(autoincrement())
+  unit MeasurementUnit[]
+  name String            @db.VarChar(36)
+
+  @@map("measurement_type")
+}
+
+model MeasurementUnit {
+  id                   Int                 @id @unique(map: "id") @default(autoincrement())
+  name                 String              @db.VarChar(36)
+  conversionFactorTo   ConversionFactors[] @relation("toUnit")
+  conversionFactorFrom ConversionFactors[] @relation("fromUnit")
+  typeId               Int
+  measurement          Measurement[]
+  type                 MeasurementType     @relation(fields: [typeId], references: [id])
+  abbreviation         String              @db.VarChar(36)
+
+  @@index([typeId])
+  @@map("measurement_unit")
+}
+
+model Order {
+  id         Int         @id @unique(map: "id") @default(autoincrement())
+  orderDate  DateTime    @default(now()) @db.Timestamp(0)
+  totalPrice Decimal     @db.Decimal(10, 2)
+  items      OrderItem[]
+
+  @@map("order")
+}
+
+model OrderItem {
+  id           Int        @id @unique(map: "id") @default(autoincrement())
+  orderId      Int
+  order        Order      @relation(fields: [orderId], references: [id])
+  ingredientId Int
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  priceId      Int
+  price        Price      @relation(fields: [priceId], references: [id])
+
+  @@index([orderId])
+  @@index([ingredientId])
+  @@index([priceId])
+  @@map("order_item")
+}
+
+model Price {
+  id           Int          @id @unique(map: "id") @default(autoincrement())
+  ingredientId Int
+  ingredient   Ingredient   @relation(fields: [ingredientId], references: [id])
+  measurement  Measurement?
+  createdAt    DateTime?    @default(now()) @db.Timestamp(0)
+  price        Decimal      @db.Decimal(10, 2)
+  OrderItem    OrderItem[]
+
+  @@index([ingredientId])
+  @@map("price")
+}
+
+model Recipe {
+  id           Int                  @id @unique(map: "id") @default(autoincrement())
+  name         String               @db.VarChar(255)
+  createdAt    DateTime             @default(now()) @db.Timestamp(0)
+  yieldName    String               @db.VarChar(255)
+  yieldCount   Int
+  targetMargin Decimal              @db.Decimal(10, 2)
+  sellPrice    Decimal              @db.Decimal(10, 2)
+  sellQuantity Int
+  description  String?              @db.Text
+  ingredients  RecipeIngredient[]
+  priceHistory RecipePriceHistory[]
+  createdItems CreatedItem[]
+  saleItem     SaleItem[]
+
+  @@map("recipe")
+}
+
+model RecipeIngredient {
+  id           Int        @id @unique(map: "id") @default(autoincrement())
+  recipeId     Int
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  ingredientId Int
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  size         Decimal    @db.Decimal(10, 2)
+
+  @@index([recipeId])
+  @@index([ingredientId])
+  @@map("recipe_ingredient")
+}
+
+model RecipePriceHistory {
+  id        Int      @id @unique(map: "id") @default(autoincrement())
+  recipeId  Int
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  price     Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([recipeId])
+  @@map("recipe_price_history")
+}
+
+model Sale {
+  id       Int        @id @unique(map: "id") @default(autoincrement())
+  saleItem SaleItem[]
+  saleDate DateTime   @default(now()) @db.Timestamp(0)
+
+  @@map("sale")
+}
+
+model SaleItem {
+  id        Int    @id @unique(map: "id") @default(autoincrement())
+  saleId    Int
+  sale      Sale   @relation(fields: [saleId], references: [id])
+  recipeId  Int
+  recipe    Recipe @relation(fields: [recipeId], references: [id])
+  yieldSold Int
+
+  @@index([saleId])
+  @@index([recipeId])
+  @@map("sale_item")
+}
