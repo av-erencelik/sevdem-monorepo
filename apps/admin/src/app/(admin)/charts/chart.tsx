@@ -1,6 +1,6 @@
 "use client";
 import { ResponsiveLine } from "@nivo/line";
-import React from "react";
+
 const data = [
   {
     id: "Çavdar",

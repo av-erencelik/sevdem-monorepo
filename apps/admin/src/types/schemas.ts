@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createInsertSchema } from "drizzle-zod";
 
 export const signInSchema = z
   .object({
