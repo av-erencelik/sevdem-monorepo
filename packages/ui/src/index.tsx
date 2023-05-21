@@ -12,3 +12,5 @@ export * from "./dropdown-menu";
 export * from "./badge";
 export * from "./checkbox";
 export * from "./typography";
+export * from "./label";
+export * from "./form";
