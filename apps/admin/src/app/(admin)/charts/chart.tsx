@@ -1,7 +1,7 @@
 "use client";
 import useCheckMobileScreen from "@/lib/hooks/useCheckMobileScreen";
 import { ResponsiveLine } from "@nivo/line";
-import { Card, CardContent } from "ui";
+import { Card, CardContent, TypographyH4 } from "ui";
 
 const data = [
   {
@@ -42,11 +42,12 @@ const MyResponsiveLine = () => {
   const isMobile = useCheckMobileScreen();
   return (
     <Card className="h-full">
-      <CardContent className="h-full">
+      <CardContent className="h-72">
+        <TypographyH4 classname="px-3 pt-6">Ürün Fiyat Geçmişi</TypographyH4>
         <ResponsiveLine
           data={data}
-          colors={{ scheme: "category10" }}
-          margin={{ top: 50, right: 20, bottom: 45, left: 40 }}
+          colors={{ scheme: "pastel1" }}
+          margin={{ top: 30, right: 20, bottom: 25, left: 50 }}
           xScale={{
             format: "%Y-%m-%d",
             precision: "day",
@@ -60,7 +61,7 @@ const MyResponsiveLine = () => {
             type: "linear",
           }}
           yFormat={function (e) {
-            return e + " TL";
+            return e + " ₺";
           }}
           axisTop={null}
           axisRight={null}
@@ -68,9 +69,6 @@ const MyResponsiveLine = () => {
             format: function (value) {
               return new Date(value).toLocaleDateString("tr-TR", { day: "numeric", month: "long" });
             },
-            legend: "Tarih",
-            legendPosition: "middle",
-            legendOffset: 35,
             tickValues: isMobile ? 3 : 7,
           }}
           axisLeft={{
@@ -78,17 +76,16 @@ const MyResponsiveLine = () => {
             tickPadding: 5,
             tickRotation: 0,
             tickValues: 10,
-            legend: "Fiyat",
-            legendOffset: -35,
-            legendPosition: "middle",
+            format: function (value) {
+              return value + " ₺";
+            },
           }}
-          pointSize={4}
-          pointColor={{ theme: "background" }}
+          pointSize={6}
+          pointColor={{ from: "color" }}
           pointBorderWidth={2}
           pointBorderColor={{ from: "serieColor" }}
           pointLabelYOffset={-12}
           useMesh={true}
-          motionConfig={"gentle"}
           defs={[
             {
               colors: [
@@ -113,7 +110,7 @@ const MyResponsiveLine = () => {
                 text: {
                   fontSize: 14,
                   fontWeight: 800,
-                  fill: "hsl(var(--mutedForeground))",
+                  fill: "hsl(var(--secondary-foreground))",
                 },
               },
             },
