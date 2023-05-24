@@ -7,6 +7,7 @@ const nextConfig = {
     config.experiments = { ...config.experiments, topLevelAwait: true };
     return config;
   },
+  transpilePackages: ["ui", "tailwindconfig"],
 };
 
 module.exports = nextConfig;

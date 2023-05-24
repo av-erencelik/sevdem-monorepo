@@ -1,8 +1,9 @@
 import "./globals.css";
-import "ui/styles.css";
-import { Source_Sans_3 } from "next/font/google";
+
 import { ClerkProvider } from "@clerk/nextjs/app-beta";
 import ToastContainerWrapper from "../components/ui/ToastContainerWrapper";
+import { cn } from "@/lib/utils";
+import { inter } from "@/lib/fonts";
 
 export const metadata = {
   title: "Template",
@@ -15,16 +16,11 @@ export const metadata = {
   manifest: "/site.webmanifest",
 };
 
-const lato = Source_Sans_3({
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en" className={lato.className}>
-        <body>
+      <html lang="tr">
+        <body className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
           {children}
           <ToastContainerWrapper />
         </body>

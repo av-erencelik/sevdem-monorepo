@@ -15,16 +15,19 @@ const LogoutButton = () => {
         setIsLoading(true);
         await signOut();
         setIsLoading(false);
-        router.replace("/");
+        router.replace("/giris");
       }}
       disabled={isLoading}
+      variant={"ghost"}
+      size={"sm"}
+      className="h-8"
     >
       {isLoading ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
         </>
       ) : (
-        "Sign Out"
+        "Çıkış Yap"
       )}
     </Button>
   );

@@ -5,8 +5,6 @@ type TypographyProps = {
   classname?: string;
 };
 
-type TypographyPropsWithChildren = {};
-
 export function TypographyH1({ children, classname }: TypographyProps) {
   return (
     <h1 className={cn("scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl", classname)}>{children}</h1>
