@@ -9,7 +9,7 @@ export const useSignInClerk = () => {
       .create({
         identifier: arg.identifier,
         password: arg.password,
-        redirectUrl: "/admin/dashboard",
+        redirectUrl: "/",
       })
       .then((response) => {
         if (response.status === "complete") {
