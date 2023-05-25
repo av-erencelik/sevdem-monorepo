@@ -1,3 +1,4 @@
+import MobileMainNav from "@/components/mobile-main-nav";
 import SiteAside from "@/components/site-aside";
 import SiteHeader from "@/components/site-header";
 
@@ -12,6 +13,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <SiteAside />
       <main className="flex flex-1 flex-col gap-1 pb-10">
         <SiteHeader />
+        <MobileMainNav />
         {children}
       </main>
     </div>
