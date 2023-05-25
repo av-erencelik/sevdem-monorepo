@@ -5,13 +5,14 @@ import SidebarNav from "./sidebar-nav";
 import { ScrollArea } from "ui";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { sidebar } from "@/lib/framer-variants/sidebar-desktop";
 
 const SiteAside = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   return (
     <motion.div
-      variants={container}
+      variants={sidebar}
       animate={isSidebarOpen ? "open" : "closed"}
       initial={false}
       className="hidden bg-slate-700 md:block"
@@ -22,17 +23,6 @@ const SiteAside = () => {
       </ScrollArea>
     </motion.div>
   );
-};
-
-const container = {
-  closed: { width: 80 },
-  open: {
-    width: 225,
-    transition: {
-      duration: 0.5,
-      staggerChildren: 0.1,
-    },
-  },
 };
 
 export default SiteAside;

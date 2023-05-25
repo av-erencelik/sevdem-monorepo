@@ -1,52 +1,19 @@
 "use client";
 
 import { sidebarConfig as items } from "@/config/sidebar";
+import { section, subsection } from "@/lib/framer-variants/sidebar-desktop";
 import { cn } from "@/lib/utils";
 import { SidebarNavItem } from "@/types/types";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "ui";
-
-const itemAnimation = {
-  closed: { opacity: 0 },
-  open: {
-    opacity: 1,
-    transition: {
-      duration: 0.2,
-      ease: "easeInOut",
-      delayChildren: 0.2,
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemAnimation2 = {
-  closed: { opacity: 0 },
-  open: {
-    opacity: 1,
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-      delayChildren: 0,
-      staggerChildren: 0.15,
-    },
-  },
-};
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "ui";
 
 const SidebarNav = ({ isSidebarDefaultOpen }: { isSidebarDefaultOpen: boolean }) => {
   const pathname = usePathname();
   return items.length ? (
-    <motion.div className="w-full p-5 text-muted" initial="closed" animate="open" variants={itemAnimation2}>
+    <motion.div className="w-full p-5 text-muted" initial="closed" animate="open" variants={section}>
       {items.map((item, index) => (
         <div key={index} className={cn("pb-8")}>
           <h4 className="mb-1 flex items-center rounded-md py-1 text-base font-semibold">
@@ -87,7 +54,7 @@ const SidebarNav = ({ isSidebarDefaultOpen }: { isSidebarDefaultOpen: boolean })
             ) : null}
 
             {isSidebarDefaultOpen && (
-              <motion.div variants={itemAnimation} className="whitespace-nowrap">
+              <motion.div variants={subsection} className="whitespace-nowrap">
                 {item.title}
               </motion.div>
             )}
@@ -109,7 +76,7 @@ interface DocsSidebarNavItemsProps {
 
 export function DocsSidebarNavItems({ items, pathname, isSidebarDefaultOpen }: DocsSidebarNavItemsProps) {
   return isSidebarDefaultOpen && items?.length ? (
-    <motion.div variants={itemAnimation} className="grid grid-flow-row auto-rows-max text-sm text-muted/80">
+    <motion.div variants={subsection} className="grid grid-flow-row auto-rows-max text-sm text-muted/80">
       {items.map((item, index) =>
         item.path ? (
           <motion.div variants={{ closed: { opacity: 0 }, open: { opacity: 1 } }} key={index}>
