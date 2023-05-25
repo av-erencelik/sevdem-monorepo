@@ -18,7 +18,7 @@ const SiteAside = () => {
       className="hidden bg-slate-700 md:block"
     >
       <Logo isSidebarDefaultOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <ScrollArea className={cn("overflow-y-auto", "h-screen", "flex-grow")}>
+      <ScrollArea className={cn("overflow-y-auto", "h-[calc(100vh-65px)]", "flex-grow")}>
         <SidebarNav isSidebarDefaultOpen={isSidebarOpen} />
       </ScrollArea>
     </motion.div>

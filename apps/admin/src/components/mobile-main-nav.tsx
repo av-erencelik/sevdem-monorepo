@@ -50,12 +50,12 @@ const MobileMainNav = () => {
           href="/envanter"
           className={cn(
             "mr-3 px-2 py-3 transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/mali") || pathname?.startsWith("/satis")
+            pathname?.startsWith("/ekonomi") || pathname?.startsWith("/satis")
               ? "border-b-2 border-slate-800 text-foreground"
               : "text-foreground/60"
           )}
         >
-          Mali
+          Ekonomi
         </Link>
       </nav>
     </ScrollAreaHorizontal>

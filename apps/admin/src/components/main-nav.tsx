@@ -49,10 +49,12 @@ const MainNav = () => {
           href="/envanter"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/mali") || pathname?.startsWith("/satis") ? "text-foreground" : "text-foreground/60"
+            pathname?.startsWith("/ekonomi") || pathname?.startsWith("/satis")
+              ? "text-foreground"
+              : "text-foreground/60"
           )}
         >
-          Mali
+          Ekonomi
         </Link>
       </nav>
     </div>

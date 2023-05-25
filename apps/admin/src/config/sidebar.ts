@@ -57,12 +57,12 @@ export const sidebarConfig: SidebarNavItem[] = [
     ],
   },
   {
-    title: "Mali",
+    title: "Ekonomi",
     icon: Wallet,
     items: [
       {
         title: "Genel Bakış",
-        path: "/mali",
+        path: "/ekonomi",
       },
       {
         title: "Satışlar",
@@ -74,7 +74,7 @@ export const sidebarConfig: SidebarNavItem[] = [
       },
       {
         title: "Yeni Gider Ekle",
-        path: "/mali/gider/yeni",
+        path: "/ekonomi/gider/yeni",
       },
     ],
   },

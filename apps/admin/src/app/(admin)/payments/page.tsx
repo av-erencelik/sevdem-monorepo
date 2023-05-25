@@ -1,3 +1,4 @@
+import { Card, CardContent } from "ui";
 import { Payment, columns } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -78,8 +79,12 @@ export default async function DemoPage() {
   const data = await getData();
 
   return (
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
-    </div>
+    <section className="p-3">
+      <Card>
+        <CardContent className="flex justify-center p-10">
+          <DataTable columns={columns} data={data} />
+        </CardContent>
+      </Card>
+    </section>
   );
 }
