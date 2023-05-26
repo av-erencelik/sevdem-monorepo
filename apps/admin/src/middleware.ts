@@ -18,7 +18,8 @@ export default authMiddleware({
   beforeAuth: async (req, evt) => {
     const ip = req.ip ?? "127.0.0.1";
     if (req.nextUrl.pathname.startsWith("/api") || req.nextUrl.pathname.startsWith("/")) {
-      const { success } = await ratelimit.limit(ip);
+      const { success, pending } = await ratelimit.limit(ip);
+      evt.waitUntil(pending);
       if (!success) {
         return NextResponse.redirect(new URL("/blocked", req.url));
       }
