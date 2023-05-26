@@ -7,13 +7,13 @@ import React from "react";
 const MainNav = () => {
   const pathname = usePathname();
   return (
-    <div className="mr-4 hidden md:block">
-      <nav className="flex items-center space-x-6 text-sm font-medium">
+    <div className="ml-4 mr-4 hidden md:block">
+      <nav className="flex items-center space-x-2 text-sm font-medium">
         <Link
           href="/"
           className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname === "/" ? "text-foreground" : "text-foreground/60"
+            "rounded-md p-2 transition-colors",
+            pathname === "/" ? "bg-sky-100 text-sky-600" : "text-foreground/70 hover:text-foreground"
           )}
         >
           Ana Sayfa
@@ -21,8 +21,8 @@ const MainNav = () => {
         <Link
           href="/malzemeler"
           className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/malzemeler") ? "text-foreground" : "text-foreground/60"
+            "rounded-md p-2 transition-colors",
+            pathname?.startsWith("/malzemeler") ? "bg-sky-100 text-sky-600" : "text-foreground/70 hover:text-foreground"
           )}
         >
           Malzemeler
@@ -30,8 +30,8 @@ const MainNav = () => {
         <Link
           href="/tarifler"
           className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/tarifler") ? "text-foreground" : "text-foreground/60"
+            "rounded-md p-2 transition-colors",
+            pathname?.startsWith("/tarifler") ? "bg-sky-100 text-sky-600" : "text-foreground/70 hover:text-foreground"
           )}
         >
           Tarifler
@@ -39,8 +39,8 @@ const MainNav = () => {
         <Link
           href="/envanter"
           className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/envanter") ? "text-foreground" : "text-foreground/60"
+            "rounded-md p-2 transition-colors",
+            pathname?.startsWith("/envanter") ? "bg-sky-100 text-sky-600" : "text-foreground/70 hover:text-foreground"
           )}
         >
           Envanter
@@ -48,10 +48,10 @@ const MainNav = () => {
         <Link
           href="/envanter"
           className={cn(
-            "transition-colors hover:text-foreground/80",
+            "rounded-md p-2 transition-colors",
             pathname?.startsWith("/ekonomi") || pathname?.startsWith("/satis")
-              ? "text-foreground"
-              : "text-foreground/60"
+              ? "bg-sky-100 text-sky-600"
+              : "text-foreground/70 hover:text-foreground"
           )}
         >
           Ekonomi

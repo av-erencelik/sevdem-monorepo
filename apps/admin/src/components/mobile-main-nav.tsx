@@ -13,8 +13,8 @@ const MobileMainNav = () => {
         <Link
           href="/"
           className={cn(
-            "whitespace-nowrap px-2 py-3 transition-colors hover:text-foreground/80",
-            pathname === "/" ? "border-b-2 border-slate-800 text-foreground" : "text-foreground/60"
+            "whitespace-nowrap px-2 py-3 transition-colors",
+            pathname === "/" ? "border-b-2 border-sky-600 text-sky-600" : "text-foreground/70 hover:text-foreground"
           )}
         >
           Ana Sayfa
@@ -22,8 +22,10 @@ const MobileMainNav = () => {
         <Link
           href="/malzemeler"
           className={cn(
-            "px-2 py-3 transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/malzemeler") ? "border-b-2 border-slate-800 text-foreground" : "text-foreground/60"
+            "px-2 py-3 transition-colors",
+            pathname?.startsWith("/malzemeler")
+              ? "border-b-2 border-sky-600 text-sky-600"
+              : "text-foreground/70 hover:text-foreground"
           )}
         >
           Malzemeler
@@ -31,8 +33,10 @@ const MobileMainNav = () => {
         <Link
           href="/tarifler"
           className={cn(
-            "px-2 py-3 transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/tarifler") ? "border-b-2 border-slate-800 text-foreground" : "text-foreground/60"
+            "px-2 py-3 transition-colors",
+            pathname?.startsWith("/tarifler")
+              ? "border-b-2 border-sky-600 text-sky-600"
+              : "text-foreground/70 hover:text-foreground"
           )}
         >
           Tarifler
@@ -40,8 +44,10 @@ const MobileMainNav = () => {
         <Link
           href="/envanter"
           className={cn(
-            "px-2 py-3 transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/envanter") ? "border-b-2 border-slate-800 text-foreground" : "text-foreground/60"
+            "px-2 py-3 transition-colors",
+            pathname?.startsWith("/envanter")
+              ? "border-b-2 border-sky-600 text-sky-600"
+              : "text-foreground/70 hover:text-foreground"
           )}
         >
           Envanter
@@ -49,10 +55,10 @@ const MobileMainNav = () => {
         <Link
           href="/envanter"
           className={cn(
-            "mr-3 px-2 py-3 transition-colors hover:text-foreground/80",
+            "mr-3 px-2 py-3 transition-colors",
             pathname?.startsWith("/ekonomi") || pathname?.startsWith("/satis")
-              ? "border-b-2 border-slate-800 text-foreground"
-              : "text-foreground/60"
+              ? "border-b-2 border-sky-600 text-sky-600"
+              : "text-foreground/70 hover:text-foreground"
           )}
         >
           Ekonomi

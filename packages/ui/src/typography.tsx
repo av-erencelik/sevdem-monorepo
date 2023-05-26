@@ -31,7 +31,7 @@ export function TypographyH4({ children, classname }: TypographyProps) {
   return <h4 className={cn("scroll-m-20 text-xl font-semibold tracking-tight", classname)}>{children}</h4>;
 }
 export function TypographyP({ children, classname }: TypographyProps) {
-  return <p className={cn("leading-7 [&:not(:first-child)]:mt-6", classname)}>{children}</p>;
+  return <p className={cn("leading-7", classname)}>{children}</p>;
 }
 export function TypographyBlockquote({ children, classname }: TypographyProps) {
   return <blockquote className={cn("mt-6 border-l-2 pl-6 italic", classname)}>{children}</blockquote>;

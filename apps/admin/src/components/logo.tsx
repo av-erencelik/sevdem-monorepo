@@ -22,12 +22,12 @@ const Logo = ({
   toggleSidebar: () => void;
 }) => {
   return (
-    <div className="cursor-default border-b-[1px] border-gray-500 text-muted">
+    <div className="cursor-default text-foreground">
       <div>
-        <div className="flex items-center justify-between p-5">
+        <div className="flex items-center justify-between p-5 py-3">
           {isSidebarDefaultOpen ? (
             <motion.div
-              className="ml-2 flex items-center overflow-x-hidden whitespace-nowrap font-bold"
+              className="ml-2 flex items-center overflow-x-hidden whitespace-nowrap font-bold text-sky-600"
               variants={item}
               initial="closed"
               animate="open"
@@ -36,8 +36,17 @@ const Logo = ({
             </motion.div>
           ) : null}
 
-          <Button size="sm" className="h-max bg-transparent px-2 hover:bg-transparent" onClick={toggleSidebar}>
-            <motion.div animate={isSidebarDefaultOpen ? { rotate: 180 } : { rotate: 0 }} initial={false}>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="h-max bg-transparent p-2 text-sky-600 transition-colors hover:text-sky-600"
+            onClick={toggleSidebar}
+          >
+            <motion.div
+              animate={isSidebarDefaultOpen ? { rotate: 180 } : { rotate: 0 }}
+              transition={{ ease: "easeInOut", duration: 0.3 }}
+              initial={false}
+            >
               <SidebarOpenIcon size={24} />
             </motion.div>
           </Button>

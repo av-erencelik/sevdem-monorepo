@@ -8,41 +8,60 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "ui";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "ui";
 
 const SidebarNav = ({ isSidebarDefaultOpen }: { isSidebarDefaultOpen: boolean }) => {
   const pathname = usePathname();
   return items.length ? (
-    <motion.div className="w-full p-5 text-muted" initial="closed" animate="open" variants={section}>
+    <motion.div className="w-full p-5 pt-0 text-foreground/70" initial="closed" animate="open" variants={section}>
       {items.map((item, index) => (
-        <div key={index} className={cn("pb-8")}>
-          <h4 className="mb-1 flex items-center rounded-md py-1 text-base font-semibold">
+        <div
+          key={index}
+          className={cn("pb-8", {
+            "pb-2": !isSidebarDefaultOpen,
+          })}
+        >
+          <h4 className="mb-1 flex items-center rounded-md py-1 text-base font-medium">
             {item.icon && item.items ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild disabled={isSidebarDefaultOpen}>
-                  <span
-                    className={cn("rounded-sm py-2 pl-2 transition-colors", {
-                      "cursor-pointer hover:bg-slate-800 hover:text-white focus:bg-slate-800 focus:text-white data-[state=open]:bg-slate-800 data-[state=open]:text-white":
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={cn("h-max rounded-sm p-2 transition-colors disabled:opacity-100", {
+                      "cursor-pointer hover:bg-muted hover:text-foreground data-[state=open]:bg-sky-100 data-[state=open]:text-sky-600":
                         !isSidebarDefaultOpen,
                     })}
                   >
                     <item.icon
-                      className="mr-2 inline-block max-h-[24px] min-h-[24px] min-w-[24px] max-w-[24px]"
-                      size={24}
+                      className={cn("inline-block max-h-[20px] min-h-[20px] min-w-[20px] max-w-[20px]", {
+                        "text-foreground": isSidebarDefaultOpen,
+                      })}
+                      size={18}
                     />
-                  </span>
+                    <span className="sr-only">{item.title}</span>
+                  </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-max border-slate-800 bg-slate-700 text-muted shadow-md" side="right">
-                  <DropdownMenuGroup>
+                <DropdownMenuContent className="w-max text-foreground/70 shadow-sm" side="right">
+                  <DropdownMenuGroup className="space-y-1">
                     {item.items.map((item, index) => (
                       <DropdownMenuItem
                         asChild
-                        className="hover:bg-slate-800 hover:text-white focus:bg-slate-800 focus:text-white"
+                        className={cn("cursor-pointer hover:bg-muted focus:bg-muted", {
+                          "bg-sky-100 text-sky-600": pathname === item.path,
+                        })}
                         key={index}
                       >
                         <Link
                           href={item.path || ""}
-                          className="hover:bg-slate-800 hover:text-white focus:bg-slate-800 focus:text-white"
+                          className="hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground"
                         >
                           {item.title}
                         </Link>
@@ -54,9 +73,9 @@ const SidebarNav = ({ isSidebarDefaultOpen }: { isSidebarDefaultOpen: boolean })
             ) : null}
 
             {isSidebarDefaultOpen && (
-              <motion.div variants={subsection} className="whitespace-nowrap">
+              <motion.span variants={subsection} className="whitespace-nowrap text-sm text-foreground">
                 {item.title}
-              </motion.div>
+              </motion.span>
             )}
           </h4>
           {item.items ? (
@@ -76,19 +95,20 @@ interface DocsSidebarNavItemsProps {
 
 export function DocsSidebarNavItems({ items, pathname, isSidebarDefaultOpen }: DocsSidebarNavItemsProps) {
   return isSidebarDefaultOpen && items?.length ? (
-    <motion.div variants={subsection} className="grid grid-flow-row auto-rows-max text-sm text-muted/80">
+    <motion.div
+      variants={subsection}
+      className="grid grid-flow-row auto-rows-max space-y-1 text-sm text-muted-foreground"
+    >
       {items.map((item, index) =>
         item.path ? (
           <motion.div variants={{ closed: { opacity: 0 }, open: { opacity: 1 } }} key={index}>
             <Link
               key={index}
               href={item.path}
-              className={cn(
-                "flex w-full items-center whitespace-nowrap rounded-md p-2 transition-colors hover:bg-slate-800 hover:text-white",
-                {
-                  "bg-slate-800 text-white": pathname?.startsWith(item.path),
-                }
-              )}
+              className={cn("flex w-full items-center whitespace-nowrap rounded-md p-2 transition-colors", {
+                "bg-sky-100 text-sky-600": pathname?.startsWith(item.path),
+                "hover:bg-muted hover:text-foreground": !pathname?.startsWith(item.path),
+              })}
             >
               {item.title}
             </Link>

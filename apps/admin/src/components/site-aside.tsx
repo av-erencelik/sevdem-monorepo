@@ -8,14 +8,14 @@ import { motion } from "framer-motion";
 import { sidebar } from "@/lib/framer-variants/sidebar-desktop";
 
 const SiteAside = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   return (
     <motion.div
       variants={sidebar}
       animate={isSidebarOpen ? "open" : "closed"}
       initial={false}
-      className="hidden bg-slate-700 md:block"
+      className="hidden border-r-[1px] bg-background md:block"
     >
       <Logo isSidebarDefaultOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <ScrollArea className={cn("overflow-y-auto", "h-[calc(100vh-65px)]", "flex-grow")}>

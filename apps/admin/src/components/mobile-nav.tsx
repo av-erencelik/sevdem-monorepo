@@ -15,17 +15,17 @@ const MobileNav = () => {
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+          className="mr-2 px-0 text-base text-sky-600 hover:bg-transparent hover:text-sky-600/80 focus:text-sky-600/80 focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
         >
           <SidebarOpen className="h-6 w-6" />
-          <span className="sr-only">Toggle Menu</span>
+          <span className="sr-only">Menuyu aç ya da kapa</span>
         </Button>
       </SheetTrigger>
-      <SheetContent size="xl" position="left" className="bg-slate-700 pr-0 text-muted">
+      <SheetContent size="xl" position="left" className="bg-background pr-0 text-foreground">
         <MobileLink href="/">
-          <span className="ml-6 font-bold">Sevdem Admin</span>
+          <span className="ml-6 font-bold text-sky-600">Sevdem Admin</span>
         </MobileLink>
-        <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
+        <ScrollArea className="my-4 h-[calc(100vh-65px)] pb-10 pl-6">
           <div className="flex flex-col space-y-3 pr-5">
             {items.map(
               (item, index) =>
@@ -46,9 +46,10 @@ const MobileNav = () => {
                               href={item.path}
                               onOpenChange={setOpen}
                               className={cn(
-                                "flex w-full items-center whitespace-nowrap rounded-md p-2 text-sm text-muted/80 transition-colors hover:bg-slate-800 hover:text-white",
+                                "text-foregound/70 flex w-full items-center whitespace-nowrap rounded-md p-2 text-sm transition-colors",
                                 {
-                                  "bg-slate-800 text-white": pathname?.startsWith(item.path),
+                                  "bg-sky-100 text-sky-600": pathname?.startsWith(item.path),
+                                  "hover:bg-muted hover:text-foreground": !pathname?.startsWith(item.path),
                                 }
                               )}
                             >
