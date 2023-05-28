@@ -144,15 +144,27 @@ model Recipe {
   yieldName    String               @db.VarChar(255)
   yieldCount   Int
   targetMargin Decimal              @db.Decimal(10, 2)
-  sellPrice    Decimal              @db.Decimal(10, 2)
   sellQuantity Int
   description  String?              @db.Text
   ingredients  RecipeIngredient[]
   priceHistory RecipePriceHistory[]
   createdItems CreatedItem[]
   saleItem     SaleItem[]
+  sellPrice    RecipeSellPrice[]
 
   @@map("recipe")
+}
+
+model RecipeSellPrice {
+  id        Int        @id @unique(map: "id") @default(autoincrement())
+  createdAt DateTime   @default(now()) @db.Timestamp(0)
+  recipeId  Int
+  recipe    Recipe     @relation(fields: [recipeId], references: [id])
+  price     Decimal    @db.Decimal(10, 2)
+  saleItem  SaleItem[]
+
+  @@index([recipeId])
+  @@map("recipe_sell_price")
 }
 
 model RecipeIngredient {
@@ -183,19 +195,23 @@ model Sale {
   id       Int        @id @unique(map: "id") @default(autoincrement())
   saleItem SaleItem[]
   saleDate DateTime   @default(now()) @db.Timestamp(0)
+  total    Decimal    @db.Decimal(10, 2)
 
   @@map("sale")
 }
 
 model SaleItem {
-  id        Int    @id @unique(map: "id") @default(autoincrement())
-  saleId    Int
-  sale      Sale   @relation(fields: [saleId], references: [id])
-  recipeId  Int
-  recipe    Recipe @relation(fields: [recipeId], references: [id])
-  yieldSold Int
+  id          Int             @id @unique(map: "id") @default(autoincrement())
+  saleId      Int
+  sale        Sale            @relation(fields: [saleId], references: [id])
+  recipeId    Int
+  recipe      Recipe          @relation(fields: [recipeId], references: [id])
+  yieldSold   Int
+  sellPriceId Int
+  sellPrice   RecipeSellPrice @relation(fields: [sellPriceId], references: [id])
 
   @@index([saleId])
   @@index([recipeId])
+  @@index([sellPriceId])
   @@map("sale_item")
 }

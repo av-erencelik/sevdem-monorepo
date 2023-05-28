@@ -3,12 +3,13 @@ import dayjs from "dayjs";
 import "dayjs/locale/tr";
 import { quotes } from "@/config/quotes";
 import Link from "next/link";
+import Summary from "@/components/charts/summary";
 dayjs.locale("tr");
 export default async function Home() {
   const day = dayjs().day();
   return (
-    <section>
-      <div className="flex flex-col gap-2 rounded-md border border-border p-5 shadow-lg">
+    <section className="space-y-5">
+      <div className="flex flex-col gap-2 rounded-md border border-border p-5 shadow-sm">
         <TypographyBlockquote classname="text-foreground border-l-0 pl-0 mt-0">
           "{quotes[day].text}"
         </TypographyBlockquote>
@@ -21,6 +22,8 @@ export default async function Home() {
           {quotes[day].sayer}
         </Link>
       </div>
+      {/* @ts-expect-error Server Component */}
+      <Summary />
     </section>
   );
 }
