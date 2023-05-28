@@ -4,6 +4,7 @@ import "dayjs/locale/tr";
 import { quotes } from "@/config/quotes";
 import Link from "next/link";
 import Summary from "@/components/charts/summary";
+import Tasks from "@/components/tasks";
 dayjs.locale("tr");
 export default async function Home() {
   const day = dayjs().day();
@@ -24,6 +25,8 @@ export default async function Home() {
       </div>
       {/* @ts-expect-error Server Component */}
       <Summary />
+      {/* @ts-expect-error Server Component */}
+      <Tasks />
     </section>
   );
 }
