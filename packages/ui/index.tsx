@@ -12,3 +12,4 @@ export * from "./src/label";
 export * from "./src/form";
 export * from "./src/seperator";
 export * from "./src/sheet";
+export * from "./src/select";
