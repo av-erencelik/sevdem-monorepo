@@ -1,9 +1,9 @@
-import { TypographyBlockquote, TypographyH3, TypographyH4, TypographyP, TypographySmall } from "ui";
+import { TypographyBlockquote } from "ui";
 import dayjs from "dayjs";
 import "dayjs/locale/tr";
 import { quotes } from "@/config/quotes";
 import Link from "next/link";
-import Summary from "@/components/charts/summary";
+import Summary from "@/components/summary";
 import Tasks from "@/components/tasks";
 dayjs.locale("tr");
 export default async function Home() {

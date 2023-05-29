@@ -106,8 +106,8 @@ export function DocsSidebarNavItems({ items, pathname, isSidebarDefaultOpen }: D
               key={index}
               href={item.path}
               className={cn("flex w-full items-center whitespace-nowrap rounded-md p-2 transition-colors", {
-                "bg-sky-100 text-sky-600": pathname?.startsWith(item.path),
-                "hover:bg-muted hover:text-foreground": !pathname?.startsWith(item.path),
+                "bg-sky-100 text-sky-600": pathname === item.path,
+                "hover:bg-muted hover:text-foreground": pathname !== item.path,
               })}
             >
               {item.title}
