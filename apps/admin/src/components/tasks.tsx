@@ -70,9 +70,9 @@ const Tasks = async () => {
                 <p className="text-sm">Satın aldığın malzemeleri envantere ekleyebilirsin</p>
               </div>
               {inventoryCount <= 0 && (
-                <Link href="/tarifler/yeni" className="text-sm font-semibold hover:underline">
+                <Link href="/envanter/yeni" className="text-sm font-semibold hover:underline">
                   <span className="hover:underline lg:hidden">Ekle</span>
-                  <span className="hidden hover:underline lg:inline-block">Envantere Malzeme Ekle</span>
+                  <span className="hidden hover:underline lg:inline-block">Satın Alım Ekle</span>
                 </Link>
               )}
             </div>
@@ -91,7 +91,7 @@ const Tasks = async () => {
                 <p className="text-sm">Ürettiğin tarifleri daha sonra satmak üzere envanter ekleyebilirsin</p>
               </div>
               {createdItemCount <= 0 && (
-                <Link href="/tarifler/yeni" className="text-sm font-semibold hover:underline">
+                <Link href="/envanter/yeni" className="text-sm font-semibold hover:underline">
                   <span className="hover:underline lg:hidden">Ekle</span>
                   <span className="hidden hover:underline lg:inline-block">Ürettiklerini Ekle</span>
                 </Link>
@@ -112,7 +112,7 @@ const Tasks = async () => {
                 <p className="text-sm">Daha sonra bu ürettiklerinin satışını ekleyebilirsin</p>
               </div>
               {saleCount <= 0 && (
-                <Link href="/tarifler/yeni" className="text-sm font-semibold">
+                <Link href="/satis/yeni" className="text-sm font-semibold">
                   <span className="hover:underline lg:hidden">Ekle</span>
                   <span className="hidden hover:underline lg:inline-block">Satış Ekle</span>
                 </Link>
@@ -137,7 +137,7 @@ const Tasks = async () => {
                 Yeni Malzeme Ekle
               </Link>
               <Link
-                href="/malzemeler/yeni"
+                href="/tarifler/yeni"
                 className={cn(
                   "flex w-full items-center whitespace-nowrap rounded-md p-2 transition-colors hover:bg-muted hover:text-foreground"
                 )}
@@ -145,15 +145,15 @@ const Tasks = async () => {
                 Yeni Tarif Ekle
               </Link>
               <Link
-                href="/malzemeler/yeni"
+                href="/envanter/yeni"
                 className={cn(
                   "flex w-full items-center whitespace-nowrap rounded-md p-2 transition-colors hover:bg-muted hover:text-foreground"
                 )}
               >
-                Envantere Yeni Malzeme Ekle
+                Satın Alım Ekle
               </Link>
               <Link
-                href="/malzemeler/yeni"
+                href="/satis/yeni"
                 className={cn(
                   "flex w-full items-center whitespace-nowrap rounded-md p-2 transition-colors hover:bg-muted hover:text-foreground"
                 )}
