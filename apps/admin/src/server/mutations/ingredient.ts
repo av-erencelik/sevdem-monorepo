@@ -2,8 +2,7 @@
 
 import { prisma } from "@/db";
 import { newIngredientFormValues } from "@/types/types";
-import { revalidatePath } from "next/cache";
-export const action = async (data: newIngredientFormValues) => {
+export const addIngredient = async (data: newIngredientFormValues) => {
   await prisma.ingredient.create({
     data: {
       name: data.name,
@@ -24,6 +23,14 @@ export const action = async (data: newIngredientFormValues) => {
           },
         },
       },
+    },
+  });
+};
+
+export const deleteIngredient = async (id: number) => {
+  await prisma.ingredient.delete({
+    where: {
+      id: id,
     },
   });
 };

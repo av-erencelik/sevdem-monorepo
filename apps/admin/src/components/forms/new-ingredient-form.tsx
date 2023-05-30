@@ -1,6 +1,6 @@
 "use client";
 
-import { action } from "@/server/mutations/add-new-ingredient";
+import { addIngredient } from "@/server/mutations/ingredient";
 import { newIngredientSchema } from "@/types/schemas";
 import { newIngredientFormValues } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -46,7 +46,7 @@ const NewIngredientForm = ({
   function onSubmit(data: newIngredientFormValues) {
     toast.success(JSON.stringify(data, null, 2));
     startTransition(() => {
-      action(data);
+      addIngredient(data);
     });
     router.refresh();
   }

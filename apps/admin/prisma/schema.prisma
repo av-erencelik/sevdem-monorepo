@@ -57,7 +57,7 @@ model Ingredient {
 model IngredientInventory {
   id           Int        @id @unique(map: "id") @default(autoincrement())
   ingredientId Int
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   quantity     Decimal    @db.Decimal(10, 2)
 
   @@index([ingredientId])
@@ -67,7 +67,7 @@ model IngredientInventory {
 model Measurement {
   id       Int             @id @unique(map: "id") @default(autoincrement())
   priceId  Int             @unique(map: "price__idx")
-  price    Price           @relation(fields: [priceId], references: [id])
+  price    Price           @relation(fields: [priceId], references: [id], onDelete: Cascade)
   unitId   Int
   unit     MeasurementUnit @relation(fields: [unitId], references: [id])
   size     Decimal         @db.Decimal(10, 2)
@@ -112,11 +112,11 @@ model Order {
 model OrderItem {
   id           Int        @id @unique(map: "id") @default(autoincrement())
   orderId      Int
-  order        Order      @relation(fields: [orderId], references: [id])
+  order        Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
   ingredientId Int
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   priceId      Int
-  price        Price      @relation(fields: [priceId], references: [id])
+  price        Price      @relation(fields: [priceId], references: [id], onDelete: Cascade)
 
   @@index([orderId])
   @@index([ingredientId])
@@ -127,7 +127,7 @@ model OrderItem {
 model Price {
   id           Int          @id @unique(map: "id") @default(autoincrement())
   ingredientId Int
-  ingredient   Ingredient   @relation(fields: [ingredientId], references: [id])
+  ingredient   Ingredient   @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   measurement  Measurement?
   createdAt    DateTime?    @default(now()) @db.Timestamp(0)
   price        Decimal      @db.Decimal(10, 2)
@@ -159,7 +159,7 @@ model RecipeSellPrice {
   id        Int        @id @unique(map: "id") @default(autoincrement())
   createdAt DateTime   @default(now()) @db.Timestamp(0)
   recipeId  Int
-  recipe    Recipe     @relation(fields: [recipeId], references: [id])
+  recipe    Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   price     Decimal    @db.Decimal(10, 2)
   saleItem  SaleItem[]
 
@@ -170,9 +170,9 @@ model RecipeSellPrice {
 model RecipeIngredient {
   id           Int        @id @unique(map: "id") @default(autoincrement())
   recipeId     Int
-  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   ingredientId Int
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   size         Decimal    @db.Decimal(10, 2)
 
   @@index([recipeId])
@@ -183,7 +183,7 @@ model RecipeIngredient {
 model RecipePriceHistory {
   id        Int      @id @unique(map: "id") @default(autoincrement())
   recipeId  Int
-  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   price     Decimal  @db.Decimal(10, 2)
   createdAt DateTime @default(now()) @db.Timestamp(0)
 
@@ -203,12 +203,12 @@ model Sale {
 model SaleItem {
   id          Int             @id @unique(map: "id") @default(autoincrement())
   saleId      Int
-  sale        Sale            @relation(fields: [saleId], references: [id])
+  sale        Sale            @relation(fields: [saleId], references: [id], onDelete: Cascade)
   recipeId    Int
-  recipe      Recipe          @relation(fields: [recipeId], references: [id])
+  recipe      Recipe          @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   yieldSold   Int
   sellPriceId Int
-  sellPrice   RecipeSellPrice @relation(fields: [sellPriceId], references: [id])
+  sellPrice   RecipeSellPrice @relation(fields: [sellPriceId], references: [id], onDelete: Cascade)
 
   @@index([saleId])
   @@index([recipeId])
