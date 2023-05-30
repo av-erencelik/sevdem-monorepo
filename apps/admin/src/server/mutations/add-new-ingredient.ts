@@ -2,8 +2,8 @@
 
 import { prisma } from "@/db";
 import { newIngredientFormValues } from "@/types/types";
-
-export async function action(data: newIngredientFormValues) {
+import { revalidatePath } from "next/cache";
+export const action = async (data: newIngredientFormValues) => {
   await prisma.ingredient.create({
     data: {
       name: data.name,
@@ -26,4 +26,4 @@ export async function action(data: newIngredientFormValues) {
       },
     },
   });
-}
+};

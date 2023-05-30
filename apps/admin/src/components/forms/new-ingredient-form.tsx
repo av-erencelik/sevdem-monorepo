@@ -5,6 +5,7 @@ import { newIngredientSchema } from "@/types/schemas";
 import { newIngredientFormValues } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MeasurementType, MeasurementUnit } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -35,6 +36,7 @@ const NewIngredientForm = ({
   })[];
 }) => {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   const form = useForm<newIngredientFormValues>({
     resolver: zodResolver(newIngredientSchema),
     defaultValues: {
@@ -46,6 +48,7 @@ const NewIngredientForm = ({
     startTransition(() => {
       action(data);
     });
+    router.refresh();
   }
   return (
     <Form {...form}>

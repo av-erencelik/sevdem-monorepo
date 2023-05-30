@@ -13,3 +13,4 @@ export * from "./src/form";
 export * from "./src/seperator";
 export * from "./src/sheet";
 export * from "./src/select";
+export * from "./src/skeleton";

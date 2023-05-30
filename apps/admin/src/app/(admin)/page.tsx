@@ -6,6 +6,10 @@ import Link from "next/link";
 import Summary from "@/components/summary";
 import Tasks from "@/components/tasks";
 dayjs.locale("tr");
+
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 export default async function Home() {
   const day = dayjs().day();
   return (
