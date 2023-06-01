@@ -23,4 +23,20 @@ export type NavItem = {
   path: string;
 };
 
-export type newIngredientFormValues = z.infer<typeof newIngredientSchema>;
+export type NewIngredientFormValues = z.infer<typeof newIngredientSchema>;
+
+export type EditIngredient = {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  size: number;
+  mlToGram: number | undefined;
+  priceId: number;
+  unitId: number;
+  type: {
+    unit: MeasurementUnit[];
+    id: number;
+    name: string;
+  };
+};

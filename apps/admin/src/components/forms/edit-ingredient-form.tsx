@@ -1,8 +1,8 @@
 "use client";
 
-import { addIngredient } from "@/server/mutations/ingredient";
+import { addIngredient, updateIngredient } from "@/server/mutations/ingredient";
 import { newIngredientSchema } from "@/types/schemas";
-import { NewIngredientFormValues } from "@/types/types";
+import { NewIngredientFormValues, EditIngredient } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MeasurementType, MeasurementUnit } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -28,25 +28,24 @@ import {
   SelectValue,
 } from "ui";
 
-const NewIngredientForm = ({
-  units,
-}: {
-  units: (MeasurementType & {
-    unit: MeasurementUnit[];
-  })[];
-}) => {
+const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const form = useForm<NewIngredientFormValues>({
     resolver: zodResolver(newIngredientSchema),
     defaultValues: {
-      name: "",
+      name: ingredient.name,
+      case: ingredient.quantity,
+      size: ingredient.size,
+      price: ingredient.price,
+      unit: ingredient.unitId,
+      mlToGram: ingredient.mlToGram,
     },
   });
   function onSubmit(data: NewIngredientFormValues) {
     toast.success(JSON.stringify(data, null, 2));
     startTransition(() => {
-      addIngredient(data);
+      updateIngredient(data, ingredient.id, ingredient.priceId);
     });
     router.refresh();
   }
@@ -74,7 +73,7 @@ const NewIngredientForm = ({
               <FormItem className="flex-1">
                 <FormLabel>Fiyat*</FormLabel>
                 <FormControl>
-                  <Input placeholder="30" inputMode="decimal" {...field} />
+                  <Input placeholder="30" inputMode="decimal" {...field} value={ingredient.price} />
                 </FormControl>
                 <FormMessage />
                 <FormDescription className="text-xs">
@@ -128,16 +127,14 @@ const NewIngredientForm = ({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="max-h-72">
-                    {units.map((type) => (
-                      <SelectGroup key={type.id}>
-                        <SelectLabel>{type.name}</SelectLabel>
-                        {type.unit.map((unit) => (
-                          <SelectItem value={unit.id.toString()} key={unit.id}>
-                            {unit.name} ({unit.abbreviation})
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    ))}
+                    <SelectGroup key={ingredient.type.id}>
+                      <SelectLabel>{ingredient.type.name}</SelectLabel>
+                      {ingredient.type.unit.map((unit) => (
+                        <SelectItem value={unit.id.toString()} key={unit.id}>
+                          {unit.name} ({unit.abbreviation})
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -173,4 +170,4 @@ const NewIngredientForm = ({
   );
 };
 
-export default NewIngredientForm;
+export default EditIngredientForm;

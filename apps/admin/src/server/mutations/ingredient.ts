@@ -1,8 +1,8 @@
 "use server";
 
 import { prisma } from "@/db";
-import { newIngredientFormValues } from "@/types/types";
-export const addIngredient = async (data: newIngredientFormValues) => {
+import { NewIngredientFormValues } from "@/types/types";
+export const addIngredient = async (data: NewIngredientFormValues) => {
   await prisma.ingredient.create({
     data: {
       name: data.name,
@@ -36,6 +36,39 @@ export const deleteIngredient = async (id: number) => {
   await prisma.ingredient.delete({
     where: {
       id: id,
+    },
+  });
+};
+
+export const updateIngredient = async (data: NewIngredientFormValues, id: number, priceId: number) => {
+  const update = await prisma.ingredient.update({
+    where: {
+      id: id,
+    },
+    data: {
+      name: data.name,
+      inventory: {
+        update: {
+          unitId: data.unit,
+        },
+      },
+      price: {
+        update: {
+          where: {
+            id: priceId,
+          },
+          data: {
+            price: data.price,
+            measurement: {
+              update: {
+                size: data.size,
+                quantity: data.case,
+                unitId: data.unit,
+              },
+            },
+          },
+        },
+      },
     },
   });
 };

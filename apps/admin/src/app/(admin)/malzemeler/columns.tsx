@@ -144,7 +144,7 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
               <Link href={`malzemeler/${id}`}>İncele</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link href={`malzemeler/${id}/düzenle`}>Düzenle</Link>
+              <Link href={`malzemeler/${id}/duzenle`}>Düzenle</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
