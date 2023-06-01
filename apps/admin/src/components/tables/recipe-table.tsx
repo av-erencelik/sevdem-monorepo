@@ -48,7 +48,7 @@ const RecipeTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TVa
     },
   });
   return (
-    <div className="w-full">
+    <div className="max-w-full overflow-hidden">
       <div className="flex items-center py-4">
         <Input
           placeholder="İsimleri filtrele"
@@ -82,7 +82,7 @@ const RecipeTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TVa
         </DropdownMenu>
       </div>
       <div className="rounded-md border">
-        <Table>
+        <Table className="max-w-full overflow-hidden">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

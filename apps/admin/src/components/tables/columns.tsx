@@ -18,7 +18,7 @@ export const columns: ColumnDef<RecipeTable>[] = [
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           İsim
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 min-h-[1rem] w-4 min-w-[1rem]" />
         </Button>
       );
     },
@@ -38,12 +38,7 @@ export const columns: ColumnDef<RecipeTable>[] = [
     accessorKey: "yield",
     id: "Ürün",
     header: ({ column }) => {
-      return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Miktar
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <div>Ürün</div>;
     },
     cell: ({ row }) => {
       const yieldValue = row.original.yield;
@@ -63,8 +58,8 @@ export const columns: ColumnDef<RecipeTable>[] = [
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Fiyat
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          Toplam Maliyet
+          <ArrowUpDown className="ml-2 h-4 min-h-[1rem] w-4 min-w-[1rem]" />
         </Button>
       );
     },
@@ -81,24 +76,47 @@ export const columns: ColumnDef<RecipeTable>[] = [
       );
     },
   },
+
   {
-    accessorKey: "UnitCost",
-    id: "Ürün Maliyeti",
+    accessorKey: "sellPrice",
+    id: "Satış Fiyatı",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Birim/Fiyat
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          Satış Fiyatı
+          <ArrowUpDown className="ml-2 h-4 min-h-[1rem] w-4 min-w-[1rem]" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const price = row.original.totalCost;
-      const yieldValue = row.original.yield;
+      const price = row.original.sellPrice;
       const formatted = new Intl.NumberFormat("tr-TR", {
         style: "currency",
         currency: "TRY",
-      }).format(price / yieldValue);
+      }).format(price);
+      return (
+        <div>
+          <div className="w-20 text-center">{formatted}</div>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "profitPercantage",
+    id: "Kar Yüzdesi",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Kar Yüzdesi
+          <ArrowUpDown className="ml-2 h-4 min-h-[1rem] w-4 min-w-[1rem]" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const price = row.original.sellPrice;
+      const formatted = new Intl.NumberFormat("tr-TR", {
+        style: "percantage",
+      }).format(price);
       return (
         <div>
           <div className="w-20 text-center">{formatted}</div>

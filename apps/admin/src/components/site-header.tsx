@@ -5,8 +5,10 @@ import MobileNav from "./mobile-nav";
 const SiteHeader = () => {
   return (
     <header className="flex items-center justify-between border-border px-5 pb-0 pt-2 md:border-b-[1px] md:py-3">
-      <MainNav />
-      <MobileNav />
+      <div className="flex items-center">
+        <MobileNav />
+        <MainNav />
+      </div>
       <LogoutButton />
     </header>
   );

@@ -27,7 +27,7 @@ export const section = {
 export const sidebar = {
   closed: { width: 80 },
   open: {
-    width: 225,
+    width: 210,
     transition: {
       duration: 0.5,
       staggerChildren: 0.1,
