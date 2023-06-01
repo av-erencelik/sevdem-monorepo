@@ -17,6 +17,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "ui";
 import { Button } from "ui";
 import { Input } from "ui";
+import Link from "next/link";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -106,7 +107,10 @@ const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValu
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  <p className="mb-2">Daha önce bir malzeme eklememişsiniz.</p>
+                  <Link href="/malzemeler/ekle" className="text-base font-semibold text-sky-600 hover:underline">
+                    Yeni malzeme ekle
+                  </Link>
                 </TableCell>
               </TableRow>
             )}

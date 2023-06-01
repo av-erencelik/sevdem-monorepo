@@ -14,7 +14,7 @@
     "@nivo/core": "^0.80.0",
     "@nivo/line": "^0.80.0",
     "@planetscale/database": "^1.7.0",
-    "@prisma/client": "^4.14.1",
+    "@prisma/client": "^4.15.0",
     "@radix-ui/react-slot": "^1.0.1",
     "@tanstack/react-table": "^8.9.1",
     "@tremor/react": "^2.6.2",
@@ -54,7 +54,7 @@
     "eslint-config-custom": "*",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.7",
-    "prisma": "^4.14.1",
+    "prisma": "^4.15.0",
     "tailwind-config": "*",
     "tsconfig": "*"
   },

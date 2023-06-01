@@ -11,10 +11,6 @@ export const sidebarConfig: SidebarNavItem[] = [
         path: "/malzemeler",
       },
       {
-        title: "Hepsini Gör",
-        path: "/malzemeler/hepsi",
-      },
-      {
         title: "Yeni Malzeme Ekle",
         path: "/malzemeler/yeni",
       },
@@ -27,10 +23,6 @@ export const sidebarConfig: SidebarNavItem[] = [
       {
         title: "Genel Bakış",
         path: "/tarifler",
-      },
-      {
-        title: "Hepsini Gör",
-        path: "/tarifler/hepsi",
       },
       {
         title: "Yeni Tarif Ekle",

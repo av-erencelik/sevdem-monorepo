@@ -42,26 +42,58 @@ model ExternalCost {
 }
 
 model Ingredient {
-  id               Int                   @id @unique(map: "id") @default(autoincrement())
-  name             String                @db.VarChar(255)
+  id               Int                  @id @unique(map: "id") @default(autoincrement())
+  name             String               @db.VarChar(255)
   price            Price[]
-  inventory        IngredientInventory[]
+  inventory        IngredientInventory?
   recipeIngredient RecipeIngredient[]
-  orderItem        OrderItem[]
-  createdAt        DateTime              @default(now()) @db.Timestamp(0)
-  updatedAt        DateTime              @updatedAt @db.Timestamp(0)
+  createdAt        DateTime             @default(now()) @db.Timestamp(0)
+  updatedAt        DateTime             @updatedAt @db.Timestamp(0)
 
   @@map("ingredient")
 }
 
 model IngredientInventory {
-  id           Int        @id @unique(map: "id") @default(autoincrement())
-  ingredientId Int
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
-  quantity     Decimal    @db.Decimal(10, 2)
+  id           Int                 @id @unique(map: "id") @default(autoincrement())
+  ingredientId Int                 @unique(map: "ingredient__idx")
+  ingredient   Ingredient          @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  unitId       Int
+  unit         MeasurementUnit     @relation(fields: [unitId], references: [id])
+  adds         InventoryAdd[]
+  subtracts    InventorySubtract[]
 
   @@index([ingredientId])
+  @@index([unitId])
   @@map("ingredient_inventory")
+}
+
+model InventoryAdd {
+  id          Int                 @id @unique(map: "id") @default(autoincrement())
+  inventoryId Int
+  inventory   IngredientInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  quantity    Decimal             @db.Decimal(10, 2)
+  totalPrice  Decimal             @db.Decimal(10, 2)
+  unitId      Int
+  unit        MeasurementUnit     @relation(fields: [unitId], references: [id])
+  createdAt   DateTime            @default(now()) @db.Timestamp(0)
+
+  @@index([inventoryId])
+  @@index([unitId])
+  @@map("inventory_add")
+}
+
+model InventorySubtract {
+  id          Int                 @id @unique(map: "id") @default(autoincrement())
+  inventoryId Int
+  inventory   IngredientInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  quantity    Decimal             @db.Decimal(10, 2)
+  unitId      Int
+  unit        MeasurementUnit     @relation(fields: [unitId], references: [id])
+  createdAt   DateTime            @default(now()) @db.Timestamp(0)
+
+  @@index([inventoryId])
+  @@index([unitId])
+  @@map("invetory_subtract")
 }
 
 model Measurement {
@@ -87,41 +119,20 @@ model MeasurementType {
 }
 
 model MeasurementUnit {
-  id                   Int                 @id @unique(map: "id") @default(autoincrement())
-  name                 String              @db.VarChar(36)
-  conversionFactorTo   ConversionFactors[] @relation("toUnit")
-  conversionFactorFrom ConversionFactors[] @relation("fromUnit")
+  id                   Int                   @id @unique(map: "id") @default(autoincrement())
+  name                 String                @db.VarChar(36)
+  conversionFactorTo   ConversionFactors[]   @relation("toUnit")
+  conversionFactorFrom ConversionFactors[]   @relation("fromUnit")
   typeId               Int
   measurement          Measurement[]
-  type                 MeasurementType     @relation(fields: [typeId], references: [id])
-  abbreviation         String              @db.VarChar(36)
+  type                 MeasurementType       @relation(fields: [typeId], references: [id])
+  abbreviation         String                @db.VarChar(36)
+  inventory            IngredientInventory[]
+  inventoryAdds        InventoryAdd[]
+  inventorySubtracts   InventorySubtract[]
 
   @@index([typeId])
   @@map("measurement_unit")
-}
-
-model Order {
-  id         Int         @id @unique(map: "id") @default(autoincrement())
-  orderDate  DateTime    @default(now()) @db.Timestamp(0)
-  totalPrice Decimal     @db.Decimal(10, 2)
-  items      OrderItem[]
-
-  @@map("order")
-}
-
-model OrderItem {
-  id           Int        @id @unique(map: "id") @default(autoincrement())
-  orderId      Int
-  order        Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  ingredientId Int
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
-  priceId      Int
-  price        Price      @relation(fields: [priceId], references: [id], onDelete: Cascade)
-
-  @@index([orderId])
-  @@index([ingredientId])
-  @@index([priceId])
-  @@map("order_item")
 }
 
 model Price {
@@ -131,7 +142,6 @@ model Price {
   measurement  Measurement?
   createdAt    DateTime?    @default(now()) @db.Timestamp(0)
   price        Decimal      @db.Decimal(10, 2)
-  OrderItem    OrderItem[]
 
   @@index([ingredientId])
   @@map("price")

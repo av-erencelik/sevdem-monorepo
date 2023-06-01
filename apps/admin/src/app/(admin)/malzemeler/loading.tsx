@@ -8,7 +8,7 @@ const Loading = () => {
         <h2 className="text-2xl font-bold tracking-tight">Malzemeler</h2>
         <p className="text-muted-foreground">Şimdiye kadar eklediğin tüm malzemeleri buradan inceleyebilirsin</p>
       </div>
-      <Separator className="my-6" />,
+      <Separator className="my-6" />
       <Skeleton className="h-[800px]" />
     </div>
   );
