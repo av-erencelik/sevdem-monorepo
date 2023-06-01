@@ -1,23 +1,16 @@
 "use client";
 
-import { IngredientRefactored, IngredientWithPrice } from "@/server/get_ingredients";
 import { deleteIngredient } from "@/server/mutations/ingredient";
+import { RecipeTable } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Button } from "ui";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "ui";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "ui";
 
-export const columns: ColumnDef<IngredientRefactored>[] = [
+export const columns: ColumnDef<RecipeTable>[] = [
   {
     accessorKey: "name",
     id: "isim",
@@ -42,8 +35,8 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
     },
   },
   {
-    accessorKey: "amount",
-    id: "miktar",
+    accessorKey: "yield",
+    id: "Ürün",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -53,19 +46,20 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
       );
     },
     cell: ({ row }) => {
-      const amount = row.original.amount;
-      const abrrevation = row.original.abbreviation;
-      const formatted = amount + " " + abrrevation;
+      const yieldValue = row.original.yield;
+      const yieldName = row.original.yieldName;
       return (
         <div>
-          <div className="w-20 text-center">{formatted}</div>
+          <div className="w-20 text-center">
+            {yieldValue} {yieldName}
+          </div>
         </div>
       );
     },
   },
   {
-    accessorKey: "price",
-    id: "fiyat",
+    accessorKey: "totalCost",
+    id: "Toplam Maliyet",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -75,7 +69,7 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
       );
     },
     cell: ({ row }) => {
-      const price = row.original.price;
+      const price = row.original.totalCost;
       const formatted = new Intl.NumberFormat("tr-TR", {
         style: "currency",
         currency: "TRY",
@@ -88,8 +82,8 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
     },
   },
   {
-    accessorKey: "unitPrice",
-    id: "birim/fiyat",
+    accessorKey: "UnitCost",
+    id: "Ürün Maliyeti",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -99,11 +93,12 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
       );
     },
     cell: ({ row }) => {
-      const price = row.original.unitPrice;
+      const price = row.original.totalCost;
+      const yieldValue = row.original.yield;
       const formatted = new Intl.NumberFormat("tr-TR", {
         style: "currency",
         currency: "TRY",
-      }).format(price);
+      }).format(price / yieldValue);
       return (
         <div>
           <div className="w-20 text-center">{formatted}</div>

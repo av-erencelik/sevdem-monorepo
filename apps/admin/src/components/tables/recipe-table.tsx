@@ -18,12 +18,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "u
 import { Button } from "ui";
 import { Input } from "ui";
 import Link from "next/link";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) => {
+const RecipeTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -107,9 +108,9 @@ const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValu
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  <p className="mb-2">Daha önce bir malzeme eklememişsiniz.</p>
-                  <Link href="/malzemeler/yeni" className="text-base font-semibold text-sky-600 hover:underline">
-                    Yeni malzeme ekle
+                  <p className="mb-2">Daha önce bu malzemeyi kullanan bir tarif eklememişsiniz</p>
+                  <Link href="/tarifler/yeni" className="text-base font-semibold text-sky-600 hover:underline">
+                    Yeni tarif ekle
                   </Link>
                 </TableCell>
               </TableRow>
@@ -132,4 +133,4 @@ const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValu
   );
 };
 
-export default DataTable;
+export default RecipeTable;

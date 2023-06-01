@@ -40,3 +40,13 @@ export type EditIngredient = {
     name: string;
   };
 };
+
+export type RecipeTable = {
+  id: number;
+  name: string;
+  yield: number;
+  yieldName: string;
+  totalCost: number;
+  sellPrice: number;
+  profitPercantage: number;
+};

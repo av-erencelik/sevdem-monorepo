@@ -150,7 +150,7 @@ const NewIngredientForm = ({
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel>
-                  Dönüşüm Faktörü <span className="text-xs">(zorunlu değil)</span>
+                  Dönüşüm Faktörü <span className="text-xs">(ml'den grama)</span>
                 </FormLabel>
                 <FormControl>
                   <Input placeholder="15" inputMode="decimal" {...field} />
