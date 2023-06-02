@@ -21,7 +21,7 @@ const LoginForm = () => {
   const { trigger, isMutating, error } = useSignInClerk();
   useEffect(() => {
     if (isSignedIn) {
-      router.push("/admin");
+      router.push("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignedIn]);

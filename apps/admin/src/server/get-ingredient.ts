@@ -118,13 +118,18 @@ export async function getIngredient(id: string) {
     };
   });
 
-  // get all price history for ingredient on unit size
   const priceHistory = ingredient?.price.map((price) => {
     return {
       x: price.createdAt!,
       y: price.price.toNumber() / (price.measurement!.quantity.toNumber() * price.measurement!.size.toNumber()),
     };
   });
+
+  // get the price increase or decrease percantage
+  let priceChangePercantage = undefined;
+  if (priceHistory && priceHistory.length > 1) {
+    priceChangePercantage = ((priceHistory[0].y - priceHistory[1].y) / priceHistory[1].y) * 100;
+  }
 
   if (ingredient) {
     const ingredientRefactored = {
@@ -144,6 +149,7 @@ export async function getIngredient(id: string) {
       recipeCount: recipe.length,
       recipes: recipeRefactored,
       priceHistory: { id: ingredient.name, data: priceHistory?.reverse() ?? [] },
+      priceChangePercantage: priceChangePercantage,
     };
     return ingredientRefactored;
   }

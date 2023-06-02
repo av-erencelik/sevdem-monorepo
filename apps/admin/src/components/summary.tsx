@@ -14,7 +14,7 @@ const Summary = async () => {
   } = await getSummary();
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      <Card>
+      <Card className="shadow-md">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Toplam Kâr</CardTitle>
           <Wallet className="h-4 w-4 text-muted-foreground" />
@@ -26,7 +26,7 @@ const Summary = async () => {
           </p>
         </CardContent>
       </Card>
-      <Card>
+      <Card className="shadow-md">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Satış</CardTitle>
           <Banknote className="h-4 w-4 text-muted-foreground" />
@@ -38,7 +38,7 @@ const Summary = async () => {
           </p>
         </CardContent>
       </Card>
-      <Card>
+      <Card className="shadow-md">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Satın Alım</CardTitle>
           <CreditCard className="h-4 w-4 text-muted-foreground" />
@@ -50,7 +50,7 @@ const Summary = async () => {
           </p>
         </CardContent>
       </Card>
-      <Card>
+      <Card className="shadow-md">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">En Çok Satan</CardTitle>
           <Cookie className="h-4 w-4 text-muted-foreground" />

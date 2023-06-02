@@ -5,7 +5,9 @@ import { Card, CardContent, TypographyH4 } from "ui";
 
 const PriceHistory = ({
   data,
+  title,
 }: {
+  title: string;
   data: {
     id: string;
     data: {
@@ -18,7 +20,7 @@ const PriceHistory = ({
   const refactoredData = [data];
   return (
     <div className="mb-3 h-64">
-      <TypographyH4 classname="pt-6">Ürün Fiyat Geçmişi</TypographyH4>
+      <TypographyH4 classname="pt-6">{title}</TypographyH4>
       <ResponsiveLine
         data={refactoredData}
         colors={{ scheme: "category10" }}

@@ -45,7 +45,6 @@ const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
   });
   function onSubmit(data: EditIngredientFormValues) {
     toast.success(JSON.stringify(data, null, 2));
-    console.log(data);
     startTransition(() => {
       updateIngredient(data, ingredient.id, ingredient.priceId);
     });

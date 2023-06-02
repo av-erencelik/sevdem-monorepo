@@ -8,7 +8,7 @@ import Link from "next/link";
 const Page = async () => {
   const ingredients = await getIngredients();
   return (
-    <div className="space-y-6 rounded-lg border border-border p-10 pb-16 shadow-sm">
+    <div className="space-y-6 rounded-lg border border-border p-10 pb-16 shadow-md">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-0">
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight">Malzemeler</h2>

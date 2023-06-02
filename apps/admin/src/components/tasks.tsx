@@ -8,7 +8,7 @@ const Tasks = async () => {
   const { createdItemCount, ingredientCount, inventoryCount, recipeCount, saleCount } = await getTasks();
   return (
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-7">
-      <Card className="col-span-5">
+      <Card className="col-span-5 shadow-md">
         <CardHeader>
           <CardTitle>Yapılması Gerekenler</CardTitle>
         </CardHeader>
@@ -122,7 +122,7 @@ const Tasks = async () => {
         </CardContent>
       </Card>
       <div className="col-span-5 flex flex-col gap-4 xl:col-span-2">
-        <Card>
+        <Card className="shadow-md">
           <CardHeader>
             <CardTitle>Hızlı İşlem</CardTitle>
           </CardHeader>
@@ -164,7 +164,7 @@ const Tasks = async () => {
           </CardContent>
         </Card>
         <div className="grid w-full grid-cols-2 gap-4">
-          <Card>
+          <Card className="shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Malzemeler</CardTitle>
             </CardHeader>
@@ -172,7 +172,7 @@ const Tasks = async () => {
               <div className="text-2xl font-bold">{ingredientCount} Adet</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Tarifler</CardTitle>
             </CardHeader>

@@ -1,6 +1,6 @@
 "use client";
 
-import { IngredientRefactored, IngredientWithPrice } from "@/server/get_ingredients";
+import { IngredientRefactored } from "@/server/get_ingredients";
 import { deleteIngredient } from "@/server/mutations/ingredient";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
@@ -8,14 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Button } from "ui";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "ui";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "ui";
 
 export const columns: ColumnDef<IngredientRefactored>[] = [
   {
