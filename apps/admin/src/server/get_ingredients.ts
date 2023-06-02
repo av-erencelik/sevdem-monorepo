@@ -1,8 +1,11 @@
+"use server";
 import { prisma } from "@/db";
-import { Measurement, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 const ingredientsWithPrice = Prisma.validator<Prisma.IngredientArgs>()({
-  include: {
+  select: {
+    id: true,
+    name: true,
     _count: {
       select: {
         recipeIngredient: true,
@@ -10,8 +13,19 @@ const ingredientsWithPrice = Prisma.validator<Prisma.IngredientArgs>()({
     },
     price: {
       take: 1,
-      include: {
-        measurement: true,
+      select: {
+        price: true,
+        measurement: {
+          select: {
+            quantity: true,
+            size: true,
+            unit: {
+              select: {
+                abbreviation: true,
+              },
+            },
+          },
+        },
       },
     },
   },
@@ -20,7 +34,9 @@ export type IngredientWithPrice = Prisma.IngredientGetPayload<typeof ingredients
 
 export const getIngredients = async () => {
   const ingredients = await prisma.ingredient.findMany({
-    include: {
+    select: {
+      id: true,
+      name: true,
       _count: {
         select: {
           recipeIngredient: true,
@@ -28,7 +44,8 @@ export const getIngredients = async () => {
       },
       price: {
         take: 1,
-        include: {
+        select: {
+          price: true,
           measurement: {
             select: {
               quantity: true,

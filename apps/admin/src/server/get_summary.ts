@@ -1,3 +1,4 @@
+"use server";
 import { getLast30days, percIncrease } from "@/lib/utils";
 import dayjs from "dayjs";
 import { getExternalCosts, getMonthlySales } from "./revenue";
@@ -5,14 +6,15 @@ import { Prisma } from "@prisma/client";
 import { totalOrders } from "./recipe";
 
 const salesWithRecipes = Prisma.validator<Prisma.SaleArgs>()({
-  include: {
+  select: {
     saleItem: {
-      include: {
+      select: {
         sellPrice: {
           select: {
             price: true,
           },
         },
+        yieldSold: true,
         recipe: {
           select: {
             name: true,

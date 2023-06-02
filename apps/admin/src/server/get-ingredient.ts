@@ -1,3 +1,4 @@
+"use server";
 import { prisma } from "@/db";
 import { IngredientInventory, InventoryAdd, InventorySubtract } from "@prisma/client";
 
@@ -6,17 +7,26 @@ export async function getIngredient(id: string) {
     where: {
       id: parseInt(id),
     },
-    include: {
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      updatedAt: true,
       inventory: {
-        include: {
+        select: {
           subtracts: true,
           adds: true,
         },
       },
       price: {
-        include: {
+        select: {
+          id: true,
+          price: true,
           measurement: {
-            include: {
+            select: {
+              quantity: true,
+              size: true,
+              mlToGram: true,
               unit: {
                 select: {
                   id: true,
@@ -49,7 +59,11 @@ export async function getIngredient(id: string) {
         },
       },
     },
-    include: {
+    select: {
+      id: true,
+      name: true,
+      yieldCount: true,
+      yieldName: true,
       priceHistory: {
         orderBy: {
           createdAt: "desc",
@@ -57,13 +71,17 @@ export async function getIngredient(id: string) {
         take: 1,
       },
       ingredients: {
-        include: {
+        select: {
+          size: true,
           ingredient: {
-            include: {
+            select: {
               price: {
-                include: {
+                select: {
+                  price: true,
                   measurement: {
-                    include: {
+                    select: {
+                      quantity: true,
+                      size: true,
                       unit: true,
                     },
                   },
@@ -126,12 +144,10 @@ export async function getIngredient(id: string) {
 }
 
 function totalInventory(
-  inventory:
-    | (IngredientInventory & {
-        adds: InventoryAdd[];
-        subtracts: InventorySubtract[];
-      })
-    | null
+  inventory: {
+    adds: InventoryAdd[];
+    subtracts: InventorySubtract[];
+  } | null
 ) {
   if (!inventory) return 0;
   const adds = inventory.adds.reduce((acc, curr) => acc + curr.quantity.toNumber(), 0);

@@ -1,5 +1,5 @@
+"use server";
 import { prisma } from "@/db";
-import "server-only";
 
 export const getExternalCosts = async (startDate: Date, endDate: Date) => {
   return await prisma.externalCost.aggregate({
@@ -17,14 +17,15 @@ export const getExternalCosts = async (startDate: Date, endDate: Date) => {
 
 export const getMonthlySales = async (startDate: Date, endDate: Date) => {
   return await prisma.sale.findMany({
-    include: {
+    select: {
       saleItem: {
-        include: {
+        select: {
           sellPrice: {
             select: {
               price: true,
             },
           },
+          yieldSold: true,
           recipe: {
             select: {
               name: true,
