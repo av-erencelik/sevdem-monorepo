@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { newIngredientSchema, signInSchema } from "./schemas";
+import { editIngredientSchema, newIngredientSchema, signInSchema } from "./schemas";
 import type { LucideIcon } from "lucide-react";
 
 export type SignInFormData = z.infer<typeof signInSchema>;
@@ -40,6 +40,8 @@ export type EditIngredient = {
     name: string;
   };
 };
+
+export type EditIngredientFormValues = z.infer<typeof editIngredientSchema>;
 
 export type RecipeTable = {
   id: number;

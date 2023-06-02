@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/db";
-import { NewIngredientFormValues } from "@/types/types";
+import { EditIngredientFormValues, NewIngredientFormValues } from "@/types/types";
 export const addIngredient = async (data: NewIngredientFormValues) => {
   await prisma.ingredient.create({
     data: {
@@ -40,7 +40,7 @@ export const deleteIngredient = async (id: number) => {
   });
 };
 
-export const updateIngredient = async (data: NewIngredientFormValues, id: number, priceId: number) => {
+export const updateIngredient = async (data: EditIngredientFormValues, id: number, priceId: number) => {
   const update = await prisma.ingredient.update({
     where: {
       id: id,
@@ -52,23 +52,41 @@ export const updateIngredient = async (data: NewIngredientFormValues, id: number
           unitId: data.unit,
         },
       },
-      price: {
-        update: {
-          where: {
-            id: priceId,
-          },
-          data: {
-            price: data.price,
-            measurement: {
-              update: {
-                size: data.size,
-                quantity: data.case,
-                unitId: data.unit,
+      price: !data.newPrice
+        ? {
+            update: {
+              where: {
+                id: priceId,
+              },
+              data: {
+                price: data.price,
+                measurement: {
+                  update: {
+                    size: data.size,
+                    quantity: data.case,
+                    unitId: data.unit,
+                  },
+                },
+              },
+            },
+          }
+        : {
+            create: {
+              price: data.price,
+              measurement: {
+                create: {
+                  quantity: data.case,
+                  size: data.size,
+                  mlToGram: data.mlToGram,
+                  unit: {
+                    connect: {
+                      id: data.unit,
+                    },
+                  },
+                },
               },
             },
           },
-        },
-      },
     },
   });
 };

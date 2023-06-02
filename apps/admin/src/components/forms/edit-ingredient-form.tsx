@@ -1,8 +1,8 @@
 "use client";
 
 import { updateIngredient } from "@/server/mutations/ingredient";
-import { newIngredientSchema } from "@/types/schemas";
-import { NewIngredientFormValues, EditIngredient } from "@/types/types";
+import { editIngredientSchema, newIngredientSchema } from "@/types/schemas";
+import { NewIngredientFormValues, EditIngredient, EditIngredientFormValues } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
   Button,
+  Checkbox,
   Form,
   FormControl,
   FormDescription,
@@ -30,8 +31,8 @@ import {
 const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const form = useForm<NewIngredientFormValues>({
-    resolver: zodResolver(newIngredientSchema),
+  const form = useForm<EditIngredientFormValues>({
+    resolver: zodResolver(editIngredientSchema),
     defaultValues: {
       name: ingredient.name,
       case: ingredient.quantity,
@@ -39,10 +40,12 @@ const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
       price: ingredient.price,
       unit: ingredient.unitId,
       mlToGram: ingredient.mlToGram,
+      newPrice: true,
     },
   });
-  function onSubmit(data: NewIngredientFormValues) {
+  function onSubmit(data: EditIngredientFormValues) {
     toast.success(JSON.stringify(data, null, 2));
+    console.log(data);
     startTransition(() => {
       updateIngredient(data, ingredient.id, ingredient.priceId);
     });
@@ -72,7 +75,7 @@ const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
               <FormItem className="flex-1">
                 <FormLabel>Fiyat*</FormLabel>
                 <FormControl>
-                  <Input placeholder="30" inputMode="decimal" {...field} value={ingredient.price} />
+                  <Input placeholder="30" inputMode="decimal" {...field} />
                 </FormControl>
                 <FormMessage />
                 <FormDescription className="text-xs">
@@ -119,7 +122,7 @@ const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
             render={({ field }) => (
               <FormItem className="md:w-[49%]">
                 <FormLabel>Birim*</FormLabel>
-                <Select onValueChange={field.onChange}>
+                <Select onValueChange={field.onChange} defaultValue={ingredient.unitId.toString()}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Birim seç" />
@@ -159,6 +162,26 @@ const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
               </FormItem>
             )}
           ></FormField>
+        </div>
+        <div>
+          <FormField
+            control={form.control}
+            name="newPrice"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>Yeni fiyat olarak eklensin mi?</FormLabel>
+                  <FormDescription>
+                    Eğer yeni fiyat olarak eklenirse, bu malzeme için yeni bir fiyat oluşturulur. Aksi takdirde mevcut
+                    fiyatı güncellenir.
+                  </FormDescription>
+                </div>
+              </FormItem>
+            )}
+          />
         </div>
 
         <Button type="submit" className="w-full md:w-max">

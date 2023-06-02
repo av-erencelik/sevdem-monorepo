@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/db";
-import { IngredientInventory, InventoryAdd, InventorySubtract } from "@prisma/client";
+import { InventoryAdd, InventorySubtract } from "@prisma/client";
 
 export async function getIngredient(id: string) {
   const ingredient = await prisma.ingredient.findUnique({
@@ -22,6 +22,7 @@ export async function getIngredient(id: string) {
         select: {
           id: true,
           price: true,
+          createdAt: true,
           measurement: {
             select: {
               quantity: true,
@@ -43,7 +44,6 @@ export async function getIngredient(id: string) {
             },
           },
         },
-        take: 1,
         orderBy: {
           createdAt: "desc",
         },
@@ -86,7 +86,6 @@ export async function getIngredient(id: string) {
                     },
                   },
                 },
-                take: 1,
                 orderBy: {
                   createdAt: "desc",
                 },
@@ -100,7 +99,7 @@ export async function getIngredient(id: string) {
 
   const recipeRefactored = recipe.map((recipe) => {
     let totalCost = 0;
-    recipe.ingredients.forEach((ingredient, index) => {
+    recipe.ingredients.forEach((ingredient) => {
       const ingredientCost =
         ingredient.ingredient.price[0].price.toNumber() /
         (ingredient.ingredient.price[0].measurement!.quantity.toNumber() *
@@ -116,6 +115,14 @@ export async function getIngredient(id: string) {
       totalCost: totalCost,
       sellPrice: recipe.priceHistory[0].price.toNumber(),
       profitPercantage: ((recipe.priceHistory[0].price.toNumber() - totalCost) / totalCost) * 100,
+    };
+  });
+
+  // get all price history for ingredient on unit size
+  const priceHistory = ingredient?.price.map((price) => {
+    return {
+      x: price.createdAt!,
+      y: price.price.toNumber() / (price.measurement!.quantity.toNumber() * price.measurement!.size.toNumber()),
     };
   });
 
@@ -136,6 +143,7 @@ export async function getIngredient(id: string) {
       abbreviation: ingredient.price[0].measurement!.unit.abbreviation,
       recipeCount: recipe.length,
       recipes: recipeRefactored,
+      priceHistory: { id: ingredient.name, data: priceHistory?.reverse() ?? [] },
     };
     return ingredientRefactored;
   }

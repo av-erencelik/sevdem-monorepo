@@ -44,6 +44,9 @@ export const getIngredients = async () => {
       },
       price: {
         take: 1,
+        orderBy: {
+          createdAt: "desc",
+        },
         select: {
           price: true,
           measurement: {

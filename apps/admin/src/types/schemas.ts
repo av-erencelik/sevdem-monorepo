@@ -71,3 +71,7 @@ export const newIngredientSchema = z.object({
     .or(z.number()),
   mlToGram: z.number().min(0, "0'dan küçük olamaz").optional().or(z.number()),
 });
+
+export const editIngredientSchema = newIngredientSchema.extend({
+  newPrice: z.boolean().default(true),
+});

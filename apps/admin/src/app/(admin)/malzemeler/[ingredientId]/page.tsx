@@ -3,6 +3,7 @@ import RecipeTable from "@/components/tables/recipe-table";
 import { getIngredient } from "@/server/get-ingredient";
 import { Separator } from "ui";
 import { columns } from "@/components/tables/columns";
+import PriceHistory from "@/components/charts/price-history";
 
 const IngredientDetailsPage = async ({ params }: { params: { ingredientId: string } }) => {
   const ingredient = await getIngredient(params.ingredientId);
@@ -20,6 +21,9 @@ const IngredientDetailsPage = async ({ params }: { params: { ingredientId: strin
       <Separator className="my-6" />
       <div>
         <RecipeTable columns={columns} data={ingredient.recipes} />
+      </div>
+      <div>
+        <PriceHistory data={ingredient.priceHistory} />
       </div>
     </div>
   );
