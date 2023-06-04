@@ -12,8 +12,8 @@ const EditRecipePage = async ({ params }: { params: { recipeId: string } }) => {
   return (
     <div className="space-y-6 rounded-lg border border-border p-10 pb-16 shadow-md">
       <div className="space-y-0.5">
-        <h2 className="text-2xl font-bold tracking-tight">Yeni Tarif</h2>
-        <p className="text-muted-foreground">Eklediğin bir tarifi güncelle.</p>
+        <h2 className="text-2xl font-bold tracking-tight">{recipe.name}</h2>
+        <p className="text-muted-foreground">Eklediğin bir tarifi düzenle</p>
       </div>
       <Separator className="my-6" />
       <div>
