@@ -1,7 +1,7 @@
 import IngredientDetails from "@/components/ingredient-details";
 import RecipeTable from "@/components/tables/recipe-table";
 import { getIngredient } from "@/server/get-ingredient";
-import { Separator, TypographyH4 } from "ui";
+import { TypographyH4 } from "ui";
 import { columns } from "@/components/tables/columns";
 import PriceHistory from "@/components/charts/price-history";
 import Link from "next/link";

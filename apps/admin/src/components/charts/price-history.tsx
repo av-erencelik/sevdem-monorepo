@@ -1,7 +1,7 @@
 "use client";
 import useCheckMobileScreen from "@/lib/hooks/useCheckMobileScreen";
 import { ResponsiveLine } from "@nivo/line";
-import { Card, CardContent, TypographyH4 } from "ui";
+import { TypographyH4 } from "ui";
 
 const PriceHistory = ({
   data,
@@ -46,7 +46,7 @@ const PriceHistory = ({
           format: function (value) {
             return new Date(value).toLocaleDateString("tr-TR", { day: "numeric", month: "long" });
           },
-          tickValues: isMobile ? 3 : 7,
+          tickValues: isMobile ? 2 : 7,
         }}
         axisLeft={{
           tickSize: 5,

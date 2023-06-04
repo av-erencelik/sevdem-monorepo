@@ -198,7 +198,9 @@ const EditRecipeForm = ({
                         <SelectContent className="max-h-72">
                           {units.map(
                             (type) =>
-                              ingredients.filter((ingredient) => ingredient.unitTypeId === type.id)[0] && (
+                              type.id ==
+                                ingredients.filter((ingredient) => field.ingredientId === ingredient.id.toString())[0]
+                                  .unitTypeId && (
                                 <SelectGroup key={type.id}>
                                   <SelectLabel>{type.name}</SelectLabel>
                                   {type.unit.map((unit) => (
@@ -238,7 +240,7 @@ const EditRecipeForm = ({
                       append({
                         ingredientId: ingredient.id.toString(),
                         amount: 0,
-                        unitId: 0,
+                        unitId: ingredient.unitId,
                       })
                     }
                   >
@@ -250,7 +252,7 @@ const EditRecipeForm = ({
           </div>
         </div>
 
-        <Button type="submit" className="w-full md:w-max">
+        <Button type="submit" className="w-full md:w-max" disabled={isPending}>
           {isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Ekleniyor

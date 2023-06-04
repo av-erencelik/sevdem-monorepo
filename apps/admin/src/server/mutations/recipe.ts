@@ -3,7 +3,6 @@
 import { prisma } from "@/db";
 import { refactorRecipes } from "@/lib/server";
 import { NewRecipeFormValues } from "@/types/types";
-import { Ingredient, Measurement, Price, RecipeIngredient } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export async function addRecipe(data: NewRecipeFormValues) {
@@ -91,7 +90,7 @@ export async function addRecipe(data: NewRecipeFormValues) {
 
   const recipeRefactored = refactorRecipes([recipe])[0];
 
-  const priceHistory = await prisma.recipePriceHistory.create({
+  const priceHistory = prisma.recipePriceHistory.create({
     data: {
       price: recipeRefactored.totalCost,
       recipe: {
@@ -133,12 +132,19 @@ export async function updateRecipe(id: number, data: NewRecipeFormValues) {
     data: {
       name: data.name,
       description: data.description,
-      sellPrice: {
-        delete: { id: recipe?.sellPrice[0].id },
-        create: {
-          price: data.sellPrice,
-        },
-      },
+      sellPrice:
+        recipe?.sellPrice?.[0].price.toNumber() !== data.sellPrice
+          ? {
+              delete: { id: recipe?.sellPrice[0].id },
+              create: {
+                price: data.sellPrice,
+              },
+            }
+          : {
+              create: {
+                price: data.sellPrice,
+              },
+            },
       targetMargin: data.targetMargin,
       yieldCount: data.yieldCount,
       yieldName: data.yieldName,

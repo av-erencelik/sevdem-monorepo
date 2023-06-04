@@ -21,6 +21,12 @@ export function getLast30days(date: dayjs.Dayjs) {
   return { startDate, endDate };
 }
 
+export function getLastOneYear(date: dayjs.Dayjs) {
+  const startDate = date.subtract(1, "year").toDate();
+  const endDate = date.toDate();
+  return { startDate, endDate };
+}
+
 export function percIncrease(a: number, b: number) {
   let percent;
   if (b !== 0) {

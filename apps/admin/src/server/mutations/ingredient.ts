@@ -32,7 +32,7 @@ export const addIngredient = async (data: NewIngredientFormValues) => {
     },
   });
 
-  redirect(`/tarifler`);
+  redirect(`/malzemeler`);
 };
 
 export const deleteIngredient = async (id: number) => {
@@ -92,5 +92,5 @@ export const updateIngredient = async (data: EditIngredientFormValues, id: numbe
           },
     },
   });
-  redirect(`/tarifler`);
+  redirect(`malzemeler`);
 };

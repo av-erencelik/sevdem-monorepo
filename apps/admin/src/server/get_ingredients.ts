@@ -74,7 +74,6 @@ export const getIngredients = async () => {
       price: ingredient.price[0].price.toNumber(),
       amount: ingredient.price[0].measurement!.quantity.toNumber() * ingredient.price[0].measurement!.size.toNumber(),
       abbreviation: ingredient.price[0].measurement!.unit.abbreviation,
-      count: ingredient._count.recipeIngredient,
       unitPrice:
         ingredient.price[0].price.toNumber() /
         (ingredient.price[0].measurement!.quantity.toNumber() * ingredient.price[0].measurement!.size.toNumber()),
@@ -89,7 +88,6 @@ export type IngredientRefactored = {
   price: number;
   abbreviation: string;
   amount: number;
-  count: number;
   unitPrice: number;
 };
 
@@ -97,6 +95,7 @@ export type IngredientForForm = {
   id: number;
   name: string;
   unitTypeId: number;
+  unitId: number;
 };
 
 export async function getIngredientsForForm() {
@@ -112,6 +111,7 @@ export async function getIngredientsForForm() {
         select: {
           measurement: {
             select: {
+              unitId: true,
               unit: {
                 select: {
                   typeId: true,
@@ -130,6 +130,7 @@ export async function getIngredientsForForm() {
       id: ingredient.id,
       name: ingredient.name,
       unitTypeId: ingredient.price[0].measurement!.unit.typeId,
+      unitId: ingredient.price[0].measurement!.unitId,
     };
     ingredientsRefactored.push(ingredientRefactored);
   });

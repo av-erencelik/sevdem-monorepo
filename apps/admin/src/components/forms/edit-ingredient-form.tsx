@@ -181,7 +181,7 @@ const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
           />
         </div>
 
-        <Button type="submit" className="w-full md:w-max">
+        <Button type="submit" className="w-full md:w-max" disabled={isPending}>
           {isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Ekleniyor

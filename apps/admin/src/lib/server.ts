@@ -28,19 +28,6 @@ export function refactorRecipes(recipes: RecipesWithIngredients) {
       }
     }, 0);
 
-    if (totalCost !== recipe.priceHistory[0].price.toNumber()) {
-      prisma.recipePriceHistory.create({
-        data: {
-          price: totalCost,
-          recipe: {
-            connect: {
-              id: recipe.id,
-            },
-          },
-        },
-      });
-    }
-
     return {
       id: recipe.id,
       name: recipe.name,

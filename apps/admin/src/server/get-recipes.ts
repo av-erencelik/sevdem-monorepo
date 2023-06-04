@@ -55,5 +55,22 @@ export async function getRecipes() {
       },
     },
   });
-  return refactorRecipes(recipes);
+  const refactoredRecipes = refactorRecipes(recipes);
+
+  refactoredRecipes.map(async (recipe, index) => {
+    if (recipe.totalCost !== recipes[index].priceHistory[0].price.toNumber()) {
+      await prisma.recipePriceHistory.create({
+        data: {
+          price: recipe.totalCost,
+          recipe: {
+            connect: {
+              id: recipe.id,
+            },
+          },
+        },
+      });
+    }
+  });
+
+  return refactoredRecipes;
 }
