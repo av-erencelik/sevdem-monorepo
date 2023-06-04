@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteIngredient } from "@/server/mutations/ingredient";
+import { deleteRecipe } from "@/server/mutations/recipe";
 import { RecipeTable } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
@@ -27,7 +28,7 @@ export const columns: ColumnDef<RecipeTable>[] = [
       const id = row.original.id;
       return (
         <div>
-          <Link href={`malzemeler/${id}`} className="font-medium text-sky-600 hover:underline">
+          <Link href={`tarifler/${id}`} className="font-medium text-sky-600 hover:underline">
             {name}
           </Link>
         </div>
@@ -38,7 +39,7 @@ export const columns: ColumnDef<RecipeTable>[] = [
     accessorKey: "yield",
     id: "Ürün",
     header: ({ column }) => {
-      return <div>Ürün</div>;
+      return <div className="ml-4">Ürün</div>;
     },
     cell: ({ row }) => {
       const yieldValue = row.original.yield;
@@ -102,26 +103,33 @@ export const columns: ColumnDef<RecipeTable>[] = [
     },
   },
   {
-    accessorKey: "profitPercantage",
-    id: "Kar Yüzdesi",
+    accessorKey: "profitMarginPercentage",
+    id: "Kar Marjı",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Kar Yüzdesi
+          Kar Marjı
           <ArrowUpDown className="ml-2 h-4 min-h-[1rem] w-4 min-w-[1rem]" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const price = row.original.sellPrice;
-      const formatted = new Intl.NumberFormat("tr-TR", {
-        style: "percantage",
-      }).format(price);
-      return (
-        <div>
-          <div className="w-20 text-center">{formatted}</div>
-        </div>
-      );
+      const profitMargin = row.original.profitMarginPercentage;
+      const target = row.original.targetMargin;
+      const formatted = `%${profitMargin.toFixed(2)}`;
+      if (profitMargin < target) {
+        return (
+          <div className="text-red-600">
+            <div className="w-20 text-center">{formatted}</div>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <div className="w-20 text-center">{formatted}</div>
+          </div>
+        );
+      }
     },
   },
   {
@@ -137,7 +145,7 @@ export const columns: ColumnDef<RecipeTable>[] = [
       const router = useRouter();
       const action = () => {
         startTransition(() => {
-          deleteIngredient(id);
+          deleteRecipe(id);
         });
         router.refresh();
       };
@@ -153,10 +161,10 @@ export const columns: ColumnDef<RecipeTable>[] = [
           </div>
           <DropdownMenuContent align="end">
             <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link href={`malzemeler/${id}`}>İncele</Link>
+              <Link href={`tarifler/${id}`}>İncele</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link href={`malzemeler/${id}/duzenle`}>Düzenle</Link>
+              <Link href={`tarifler/${id}/duzenle`}>Düzenle</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

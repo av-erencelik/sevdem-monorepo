@@ -2,6 +2,7 @@
 
 import { prisma } from "@/db";
 import { EditIngredientFormValues, NewIngredientFormValues } from "@/types/types";
+import { redirect } from "next/navigation";
 export const addIngredient = async (data: NewIngredientFormValues) => {
   await prisma.ingredient.create({
     data: {
@@ -30,6 +31,8 @@ export const addIngredient = async (data: NewIngredientFormValues) => {
       },
     },
   });
+
+  redirect(`/tarifler`);
 };
 
 export const deleteIngredient = async (id: number) => {
@@ -89,4 +92,5 @@ export const updateIngredient = async (data: EditIngredientFormValues, id: numbe
           },
     },
   });
+  redirect(`/tarifler`);
 };

@@ -92,3 +92,46 @@ export type IngredientRefactored = {
   count: number;
   unitPrice: number;
 };
+
+export type IngredientForForm = {
+  id: number;
+  name: string;
+  unitTypeId: number;
+};
+
+export async function getIngredientsForForm() {
+  const ingredients = await prisma.ingredient.findMany({
+    select: {
+      id: true,
+      name: true,
+      price: {
+        take: 1,
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          measurement: {
+            select: {
+              unit: {
+                select: {
+                  typeId: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+  const ingredientsRefactored = <IngredientForForm[]>[];
+
+  ingredients.forEach((ingredient) => {
+    const ingredientRefactored = {
+      id: ingredient.id,
+      name: ingredient.name,
+      unitTypeId: ingredient.price[0].measurement!.unit.typeId,
+    };
+    ingredientsRefactored.push(ingredientRefactored);
+  });
+  return ingredientsRefactored;
+}

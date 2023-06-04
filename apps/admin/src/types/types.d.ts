@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { editIngredientSchema, newIngredientSchema, signInSchema } from "./schemas";
+import { NewRecipeSchema, editIngredientSchema, newIngredientSchema, signInSchema } from "./schemas";
 import type { LucideIcon } from "lucide-react";
 
 export type SignInFormData = z.infer<typeof signInSchema>;
@@ -24,6 +24,8 @@ export type NavItem = {
 };
 
 export type NewIngredientFormValues = z.infer<typeof newIngredientSchema>;
+
+export type NewRecipeFormValues = z.infer<typeof NewRecipeSchema>;
 
 export type EditIngredient = {
   id: number;
@@ -50,5 +52,6 @@ export type RecipeTable = {
   yieldName: string;
   totalCost: number;
   sellPrice: number;
-  profitPercantage: number;
+  profitMarginPercentage: number;
+  targetMargin: number;
 };

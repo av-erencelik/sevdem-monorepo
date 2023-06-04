@@ -5,6 +5,7 @@ import { newIngredientSchema } from "@/types/schemas";
 import { NewIngredientFormValues } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MeasurementType, MeasurementUnit } from "@prisma/client";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -36,7 +37,6 @@ const NewIngredientForm = ({
   })[];
 }) => {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
   const form = useForm<NewIngredientFormValues>({
     resolver: zodResolver(newIngredientSchema),
     defaultValues: {
@@ -44,11 +44,9 @@ const NewIngredientForm = ({
     },
   });
   function onSubmit(data: NewIngredientFormValues) {
-    toast.success(JSON.stringify(data, null, 2));
     startTransition(() => {
-      addIngredient(data);
+      return addIngredient(data);
     });
-    router.refresh();
   }
   return (
     <Form {...form}>
@@ -166,7 +164,13 @@ const NewIngredientForm = ({
         </div>
 
         <Button type="submit" className="w-full md:w-max">
-          {isPending ? "Ekleniyor..." : "Yeni Malzeme Ekle"}
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Ekleniyor
+            </>
+          ) : (
+            "Yeni Malzeme Ekle"
+          )}
         </Button>
       </form>
     </Form>

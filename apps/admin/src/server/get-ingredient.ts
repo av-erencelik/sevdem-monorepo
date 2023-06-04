@@ -1,5 +1,6 @@
 "use server";
 import { prisma } from "@/db";
+import { refactorRecipes } from "@/lib/server";
 import { InventoryAdd, InventorySubtract } from "@prisma/client";
 
 export async function getIngredient(id: string) {
@@ -64,6 +65,13 @@ export async function getIngredient(id: string) {
       name: true,
       yieldCount: true,
       yieldName: true,
+      targetMargin: true,
+      sellPrice: {
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1,
+      },
       priceHistory: {
         orderBy: {
           createdAt: "desc",
@@ -73,6 +81,7 @@ export async function getIngredient(id: string) {
       ingredients: {
         select: {
           size: true,
+          unitId: true,
           ingredient: {
             select: {
               price: {
@@ -82,7 +91,14 @@ export async function getIngredient(id: string) {
                     select: {
                       quantity: true,
                       size: true,
-                      unit: true,
+                      unit: {
+                        select: {
+                          type: true,
+                          id: true,
+                          conversionFactorFrom: true,
+                          conversionFactorTo: true,
+                        },
+                      },
                     },
                   },
                 },
@@ -97,26 +113,7 @@ export async function getIngredient(id: string) {
     },
   });
 
-  const recipeRefactored = recipe.map((recipe) => {
-    let totalCost = 0;
-    recipe.ingredients.forEach((ingredient) => {
-      const ingredientCost =
-        ingredient.ingredient.price[0].price.toNumber() /
-        (ingredient.ingredient.price[0].measurement!.quantity.toNumber() *
-          ingredient.ingredient.price[0].measurement!.size.toNumber());
-      totalCost += ingredientCost * ingredient.size.toNumber();
-    });
-
-    return {
-      id: recipe.id,
-      name: recipe.name,
-      yield: recipe.yieldCount,
-      yieldName: recipe.yieldName,
-      totalCost: totalCost,
-      sellPrice: recipe.priceHistory[0].price.toNumber(),
-      profitPercantage: ((recipe.priceHistory[0].price.toNumber() - totalCost) / totalCost) * 100,
-    };
-  });
+  const recipeRefactored = refactorRecipes(recipe);
 
   const priceHistory = ingredient?.price.map((price) => {
     return {

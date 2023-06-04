@@ -130,6 +130,7 @@ model MeasurementUnit {
   inventory            IngredientInventory[]
   inventoryAdds        InventoryAdd[]
   inventorySubtracts   InventorySubtract[]
+  recipeIngredient     RecipeIngredient[]
 
   @@index([typeId])
   @@map("measurement_unit")
@@ -178,15 +179,18 @@ model RecipeSellPrice {
 }
 
 model RecipeIngredient {
-  id           Int        @id @unique(map: "id") @default(autoincrement())
+  id           Int             @id @unique(map: "id") @default(autoincrement())
   recipeId     Int
-  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  recipe       Recipe          @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   ingredientId Int
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
-  size         Decimal    @db.Decimal(10, 2)
+  ingredient   Ingredient      @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  size         Decimal         @db.Decimal(10, 2)
+  unitId       Int
+  unit         MeasurementUnit @relation(fields: [unitId], references: [id])
 
   @@index([recipeId])
   @@index([ingredientId])
+  @@index([unitId])
   @@map("recipe_ingredient")
 }
 

@@ -1,9 +1,10 @@
 "use client";
 
 import { updateIngredient } from "@/server/mutations/ingredient";
-import { editIngredientSchema, newIngredientSchema } from "@/types/schemas";
-import { NewIngredientFormValues, EditIngredient, EditIngredientFormValues } from "@/types/types";
+import { editIngredientSchema } from "@/types/schemas";
+import { EditIngredient, EditIngredientFormValues } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -30,7 +31,6 @@ import {
 
 const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
   const form = useForm<EditIngredientFormValues>({
     resolver: zodResolver(editIngredientSchema),
     defaultValues: {
@@ -44,11 +44,9 @@ const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
     },
   });
   function onSubmit(data: EditIngredientFormValues) {
-    toast.success(JSON.stringify(data, null, 2));
     startTransition(() => {
-      updateIngredient(data, ingredient.id, ingredient.priceId);
+      return updateIngredient(data, ingredient.id, ingredient.priceId);
     });
-    router.refresh();
   }
   return (
     <Form {...form}>
@@ -184,7 +182,13 @@ const EditIngredientForm = ({ ingredient }: { ingredient: EditIngredient }) => {
         </div>
 
         <Button type="submit" className="w-full md:w-max">
-          {isPending ? "Ekleniyor..." : "Yeni Malzeme Ekle"}
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Ekleniyor
+            </>
+          ) : (
+            "Malzemeyi Düzenle"
+          )}
         </Button>
       </form>
     </Form>
