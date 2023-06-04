@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex h-full flex-row overflow-x-hidden">
+    <div className="relative flex flex-row overflow-hidden lg:overflow-visible">
       <SiteAside />
       <main className="flex max-w-full flex-1 flex-col">
         <SiteHeader />

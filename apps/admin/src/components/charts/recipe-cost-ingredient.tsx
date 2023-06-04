@@ -3,11 +3,11 @@ import { ResponsivePie } from "@nivo/pie";
 
 const RecipeCostByIngredientChart = ({ data }: { data: { id: string; value: number; label: string }[] }) => {
   return (
-    <div className="h-64">
+    <div className="h-96">
       <ResponsivePie
         data={data}
         margin={{ top: 40, right: 20, bottom: 40, left: 20 }}
-        colors={{ scheme: "pastel1" }}
+        colors={{ scheme: "blues" }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
@@ -19,9 +19,11 @@ const RecipeCostByIngredientChart = ({ data }: { data: { id: string; value: numb
         }}
         valueFormat={(e) => "₺" + e.toFixed(2)}
         enableArcLabels={false}
-        arcLinkLabelsSkipAngle={10}
+        arcLinkLabelsSkipAngle={5}
         arcLinkLabelsTextColor="#333333"
         arcLinkLabelsThickness={2}
+        arcLinkLabelsStraightLength={25}
+        arcLinkLabelsDiagonalLength={25}
         enableArcLinkLabels={true}
         arcLinkLabel={"label"}
         arcLabelsSkipAngle={10}

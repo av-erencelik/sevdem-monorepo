@@ -6,7 +6,6 @@ import { ScrollArea } from "ui";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { sidebar } from "@/lib/framer-variants/sidebar-desktop";
-import useCheckMobileScreen from "@/lib/hooks/useCheckMobileScreen";
 
 const SiteAside = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -16,7 +15,7 @@ const SiteAside = () => {
       variants={sidebar}
       animate={isSidebarOpen ? "open" : "closed"}
       initial={false}
-      className="hidden border-r-[1px] bg-background lg:block"
+      className="hidden border-r-[1px] bg-background lg:sticky lg:top-0 lg:block lg:h-[100vh]"
     >
       <Logo isSidebarDefaultOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <ScrollArea className={cn("overflow-y-auto", "h-[calc(100vh-65px)]", "flex-grow")}>
