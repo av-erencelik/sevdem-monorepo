@@ -95,7 +95,7 @@ export async function getRecipe(recipeId: string) {
 
   const recipeDetails = refactorRecipeDetails(recipe);
 
-  if (recipeDetails.totalCost !== recipeDetails.costHistory.data[0].y) {
+  if (recipeDetails.totalCost !== recipe.priceHistory[0].price.toNumber()) {
     await prisma.recipePriceHistory.create({
       data: {
         price: recipeDetails.totalCost,
