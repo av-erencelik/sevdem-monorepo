@@ -1,4 +1,4 @@
-import getSummary from "@/server/get_summary";
+import getSummary from "@/server/get-summary";
 import { Banknote, Cookie, CreditCard, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "ui";
 

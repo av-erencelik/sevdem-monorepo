@@ -1,5 +1,5 @@
 import NewRecipeForm from "@/components/forms/new-recipe-form";
-import { getIngredientsForForm } from "@/server/get_ingredients";
+import { getIngredientsForForm } from "@/server/get-ingredients";
 import { getUnits } from "@/server/query-units";
 import React from "react";
 import { Separator } from "ui";

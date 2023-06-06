@@ -1,16 +1,24 @@
 "use client";
 
-import { IngredientRefactored } from "@/server/get-ingredients";
-import { deleteIngredient } from "@/server/mutations/ingredient";
+import { IngredientInventoryTable } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "ui";
+import "dayjs/locale/tr";
+import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { Button } from "ui";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "ui";
-
-export const columns: ColumnDef<IngredientRefactored>[] = [
+import { deleteInventoryAdd } from "@/server/mutations/inventory";
+dayjs.locale("tr");
+export const columns: ColumnDef<IngredientInventoryTable>[] = [
   {
     accessorKey: "name",
     id: "isim",
@@ -24,10 +32,10 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
     },
     cell: ({ row }) => {
       const name = row.original.name;
-      const id = row.original.id;
+      const id = row.original.ingredientId;
       return (
         <div>
-          <Link href={`malzemeler/${id}`} className="font-medium text-sky-600 hover:underline">
+          <Link href={`/malzemeler/${id}`} className="font-medium text-sky-600 hover:underline">
             {name}
           </Link>
         </div>
@@ -35,44 +43,41 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
     },
   },
   {
-    accessorKey: "amount",
+    accessorKey: "quantity",
     id: "miktar",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Miktar
+          Üretilen Ürün
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const amount = row.original.amount;
-      const abrrevation = row.original.abbreviation;
-      const formatted = amount + " " + abrrevation;
+      const yieldCreated = row.original.quantity;
+      const yieldName = row.original.unitAbbreviation;
+      const formatted = yieldCreated + " " + yieldName;
       return (
         <div>
-          <div className="w-20 text-center">{formatted}</div>
+          <div className="w-28 text-center">{formatted}</div>
         </div>
       );
     },
   },
   {
     accessorKey: "price",
-    id: "fiyat",
+    id: "değer",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Fiyat
+          Değer
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const price = row.original.price;
-      const formatted = new Intl.NumberFormat("tr-TR", {
-        style: "currency",
-        currency: "TRY",
-      }).format(price);
+      const price = row.original.totalPrice;
+      const formatted = "₺" + price;
       return (
         <div>
           <div className="w-20 text-center">{formatted}</div>
@@ -81,25 +86,22 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
     },
   },
   {
-    accessorKey: "unitPrice",
-    id: "birim/fiyat",
+    accessorKey: "createdAt",
+    id: "tarih",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Birim/Fiyat
+          Alım Tarihi
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const price = row.original.unitPrice;
-      const formatted = new Intl.NumberFormat("tr-TR", {
-        style: "currency",
-        currency: "TRY",
-      }).format(price);
+      const date = row.original.createdAt;
+      const formatted = dayjs(date).format("DD/MM/YYYY");
       return (
         <div>
-          <div className="w-20 text-center">{formatted}</div>
+          <div className="w-28 text-center">{formatted}</div>
         </div>
       );
     },
@@ -117,7 +119,7 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
       const router = useRouter();
       const action = () => {
         startTransition(() => {
-          deleteIngredient(id);
+          deleteInventoryAdd(id);
         });
         router.refresh();
       };
@@ -132,13 +134,6 @@ export const columns: ColumnDef<IngredientRefactored>[] = [
             </DropdownMenuTrigger>
           </div>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link href={`malzemeler/${id}`}>İncele</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link href={`malzemeler/${id}/duzenle`}>Düzenle</Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem
               className="cursor-pointer text-red-500 hover:text-red-600 focus:text-red-500"
               onClick={action}

@@ -35,16 +35,20 @@ export const sidebarConfig: SidebarNavItem[] = [
     icon: Refrigerator,
     items: [
       {
-        title: "Genel Bakış",
-        path: "/envanter",
+        title: "Tarifler",
+        path: "/envanter/tarifler",
       },
       {
-        title: "Envanter Yönetimi",
-        path: "/envanter/yonet",
+        title: "Malzemeler",
+        path: "/envanter/malzemeler",
       },
       {
-        title: "Yeni Stok Ekle",
-        path: "/envanter/yeni",
+        title: "Tarif Stoğu Ekle",
+        path: "/envanter/tarifler/yeni",
+      },
+      {
+        title: "Malzeme Stoğu Ekle",
+        path: "/envanter/malzemeler/yeni",
       },
     ],
   },

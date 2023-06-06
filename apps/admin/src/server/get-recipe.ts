@@ -1,5 +1,5 @@
 "use server";
-import { IngredientRefactored } from "./get_ingredients";
+import { IngredientRefactored } from "./get-ingredients";
 import { prisma } from "@/db";
 import { refactorRecipes } from "@/lib/server";
 import { getLastOneYear } from "@/lib/utils";

@@ -136,3 +136,98 @@ export async function getIngredientsForForm() {
   });
   return ingredientsRefactored;
 }
+
+export async function getInventoryIngredients() {
+  const ingredients = await prisma.ingredient.findMany({
+    select: {
+      id: true,
+      name: true,
+      price: {
+        take: 1,
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          price: true,
+          measurement: {
+            select: {
+              quantity: true,
+              size: true,
+            },
+          },
+        },
+      },
+      inventory: {
+        select: {
+          unit: {
+            select: {
+              id: true,
+              conversionFactorTo: true,
+              abbreviation: true,
+            },
+          },
+          id: true,
+          adds: {
+            select: {
+              quantity: true,
+              unitId: true,
+              totalPrice: true,
+            },
+          },
+          subtracts: {
+            select: {
+              quantity: true,
+              unitId: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return ingredients.map((ingredient) => {
+    const unitPrice =
+      ingredient.price[0].price.toNumber() /
+      (ingredient.price[0].measurement!.quantity.toNumber() * ingredient.price[0].measurement!.size.toNumber());
+    const totalInventory =
+      ingredient.inventory!.adds.reduce((acc, curr) => {
+        if (curr.unitId === ingredient.inventory!.unit.id) {
+          return acc + curr.quantity.toNumber();
+        } else {
+          return (
+            acc +
+            curr.quantity.toNumber() *
+              ingredient
+                .inventory!.unit.conversionFactorTo.find(
+                  (conversionFactor) => conversionFactor.fromUnitId === curr.unitId
+                )!
+                .conversionFactor.toNumber()
+          );
+        }
+      }, 0) -
+      ingredient.inventory!.subtracts.reduce((acc, curr) => {
+        if (curr.unitId === ingredient.inventory!.unit.id) {
+          return acc + curr.quantity.toNumber();
+        } else {
+          return (
+            acc +
+            curr.quantity.toNumber() *
+              ingredient
+                .inventory!.unit.conversionFactorTo.find(
+                  (conversionFactor) => conversionFactor.fromUnitId === curr.unitId
+                )!
+                .conversionFactor.toNumber()
+          );
+        }
+      }, 0);
+    return {
+      id: ingredient.inventory!.id,
+      name: ingredient.name,
+      ingredientId: ingredient.id,
+      unitId: ingredient.inventory!.unit.id,
+      abbreviation: ingredient.inventory!.unit.abbreviation,
+      totalInventory,
+      unitPrice,
+    };
+  });
+}

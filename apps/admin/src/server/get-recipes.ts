@@ -57,8 +57,8 @@ export async function getRecipes() {
   });
   const refactoredRecipes = refactorRecipes(recipes);
 
-  refactoredRecipes.map(async (recipe, index) => {
-    if (recipe.totalCost !== recipes[index].priceHistory[0].price.toNumber()) {
+  refactoredRecipes.forEach(async (recipe, index) => {
+    if (recipe.totalCost.toFixed(2) != recipes[index].priceHistory[0].price.toNumber().toFixed(2)) {
       await prisma.recipePriceHistory.create({
         data: {
           price: recipe.totalCost,
@@ -73,4 +73,29 @@ export async function getRecipes() {
   });
 
   return refactoredRecipes;
+}
+
+export async function getRecipesForInventory() {
+  const recipes = await prisma.recipe.findMany({
+    select: {
+      id: true,
+      name: true,
+      yieldCount: true,
+      priceHistory: {
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1,
+        select: {
+          price: true,
+        },
+      },
+    },
+  });
+
+  return recipes.map((recipe) => ({
+    id: recipe.id,
+    name: recipe.name,
+    price: recipe.priceHistory[0].price.toNumber() / recipe.yieldCount,
+  }));
 }

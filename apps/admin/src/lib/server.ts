@@ -1,4 +1,3 @@
-import { prisma } from "@/db";
 import { RecipesWithIngredients } from "@/types/prisma";
 
 export function refactorRecipes(recipes: RecipesWithIngredients) {

@@ -160,3 +160,84 @@ export const NewRecipeSchema = z.object({
     })
   ),
 });
+
+export const inventoryAddRecipeSchema = z.object({
+  date: z.date({
+    required_error: "Bir tarih seçiniz",
+  }),
+  recipes: z
+    .array(
+      z.object({
+        recipeId: z.string().min(1, "Lütfen geçerli bir tarif seçiniz"),
+        amount: z
+          .string({ required_error: "Gerekli" })
+          .transform((val, ctx) => {
+            const parsed = parseFloat(val);
+            if (isNaN(parsed) || parsed <= 0) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Geçerli bir miktar giriniz",
+              });
+              return z.NEVER;
+            }
+            return parsed;
+          })
+          .or(z.number().min(0.1, "0'dan büyük olmalıdır")),
+      })
+    )
+    .min(1, "En az 1 tarif seçiniz"),
+});
+
+export const inventoryAddIngredientSchema = z.object({
+  date: z.date({
+    required_error: "Bir tarih seçiniz",
+  }),
+  ingredients: z.array(
+    z.object({
+      ingredientInventoryId: z.string().min(1, "Lütfen geçerli bir malzeme seçiniz"),
+      ingredientId: z.string().min(1, "Lütfen geçerli bir malzeme seçiniz"),
+      ingredientUnitId: z
+        .string({ required_error: "Gerekli" })
+        .transform((val, ctx) => {
+          const parsed = parseFloat(val);
+          if (isNaN(parsed) || parsed <= 0) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "Geçerli bir birim seçiniz",
+            });
+            return z.NEVER;
+          }
+          return parsed;
+        })
+        .or(z.number().min(1, "Lütfen geçerli bir birim seçiniz").max(15, "Lütfen geçerli bir birim seçiniz")),
+      amount: z
+        .string({ required_error: "Gerekli" })
+        .transform((val, ctx) => {
+          const parsed = parseFloat(val);
+          if (isNaN(parsed) || parsed <= 0) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "Geçerli bir miktar giriniz",
+            });
+            return z.NEVER;
+          }
+          return parsed;
+        })
+        .or(z.number().min(0.1, "0'dan büyük olmalıdır")),
+      price: z
+        .string({ required_error: "Gerekli" })
+        .transform((val, ctx) => {
+          const parsed = parseFloat(val);
+          if (isNaN(parsed) || parsed <= 0) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "Geçerli bir miktar giriniz",
+            });
+            return z.NEVER;
+          }
+          return parsed;
+        })
+        .or(z.number().min(0.1, "0'dan büyük olmalıdır")),
+    })
+  ),
+});

@@ -1,5 +1,12 @@
 import { z } from "zod";
-import { NewRecipeSchema, editIngredientSchema, newIngredientSchema, signInSchema } from "./schemas";
+import {
+  NewRecipeSchema,
+  editIngredientSchema,
+  inventoryAddIngredientSchema,
+  inventoryAddRecipeSchema,
+  newIngredientSchema,
+  signInSchema,
+} from "./schemas";
 import type { LucideIcon } from "lucide-react";
 
 export type SignInFormData = z.infer<typeof signInSchema>;
@@ -26,6 +33,10 @@ export type NavItem = {
 export type NewIngredientFormValues = z.infer<typeof newIngredientSchema>;
 
 export type NewRecipeFormValues = z.infer<typeof NewRecipeSchema>;
+
+export type InventoryAddRecipeFormValues = z.infer<typeof inventoryAddRecipeSchema>;
+
+export type InventoryAddIngredientFormValues = z.infer<typeof inventoryAddIngredientSchema>;
 
 export type EditIngredient = {
   id: number;
@@ -54,4 +65,24 @@ export type RecipeTable = {
   sellPrice: number;
   profitMarginPercentage: number;
   targetMargin: number;
+};
+
+export type RecipeInventoryTable = {
+  id: number;
+  recipeId: number;
+  name: string;
+  yieldName: string;
+  yieldCreated: number;
+  price: number;
+  createdAt: Date;
+};
+
+export type IngredientInventoryTable = {
+  id: number;
+  ingredientId: number;
+  name: string;
+  unitAbbreviation: string;
+  quantity: number;
+  totalPrice: number;
+  createdAt: Date;
 };

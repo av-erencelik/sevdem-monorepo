@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { getTasks } from "@/server/tasks";
 import { AlertTriangle, CheckCheck } from "lucide-react";
 import Link from "next/link";
-import { Button, Card, CardContent, CardHeader, CardTitle, Separator } from "ui";
+import { Card, CardContent, CardHeader, CardTitle, Separator } from "ui";
 
 const Tasks = async () => {
   const { createdItemCount, ingredientCount, inventoryCount, recipeCount, saleCount } = await getTasks();

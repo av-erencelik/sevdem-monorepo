@@ -1,6 +1,6 @@
 "use client";
 
-import { IngredientForForm } from "@/server/get_ingredients";
+import { IngredientForForm } from "@/server/get-ingredients";
 import { updateRecipe } from "@/server/mutations/recipe";
 import { NewRecipeSchema } from "@/types/schemas";
 import { NewRecipeFormValues } from "@/types/types";

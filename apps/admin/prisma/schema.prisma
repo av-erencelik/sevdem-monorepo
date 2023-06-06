@@ -24,7 +24,7 @@ model ConversionFactors {
 model CreatedItem {
   id           Int      @id @unique(map: "id") @default(autoincrement())
   recipeId     Int
-  recipe       Recipe   @relation(fields: [recipeId], references: [id])
+  recipe       Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   yieldCreated Int
   createdAt    DateTime @default(now()) @db.Timestamp(0)
 

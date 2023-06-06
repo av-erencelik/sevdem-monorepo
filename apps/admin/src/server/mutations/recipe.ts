@@ -90,7 +90,7 @@ export async function addRecipe(data: NewRecipeFormValues) {
 
   const recipeRefactored = refactorRecipes([recipe])[0];
 
-  const priceHistory = prisma.recipePriceHistory.create({
+  const priceHistory = await prisma.recipePriceHistory.create({
     data: {
       price: recipeRefactored.totalCost,
       recipe: {
