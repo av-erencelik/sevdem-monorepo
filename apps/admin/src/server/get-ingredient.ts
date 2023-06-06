@@ -1,9 +1,12 @@
 "use server";
 import { prisma } from "@/db";
 import { refactorRecipes } from "@/lib/server";
+import { getLastOneYear } from "@/lib/utils";
 import { InventoryAdd, InventorySubtract } from "@prisma/client";
+import dayjs from "dayjs";
 
 export async function getIngredient(id: string) {
+  const { startDate, endDate } = getLastOneYear(dayjs());
   const ingredient = await prisma.ingredient.findUnique({
     where: {
       id: parseInt(id),
@@ -48,6 +51,7 @@ export async function getIngredient(id: string) {
         orderBy: {
           createdAt: "desc",
         },
+        where: {},
       },
     },
   });
