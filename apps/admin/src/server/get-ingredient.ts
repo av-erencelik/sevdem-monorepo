@@ -161,7 +161,7 @@ export async function getIngredient(id: string) {
       createdAt: ingredient.createdAt,
       updatedAt: ingredient.updatedAt,
       inventory: totalInventory(ingredient.inventory, ingredient.inventory!.unit),
-      abbreviation: ingredient.inventory?.unit.abbreviation,
+      abbreviation: ingredient.inventory!.unit.abbreviation,
       recipeCount: recipe.length,
       recipes: recipeRefactored,
       priceHistory: { id: ingredient.name, data: priceHistory?.reverse() ?? [] },
