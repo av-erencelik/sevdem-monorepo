@@ -6,13 +6,16 @@ import { NewRecipeSchema } from "@/types/schemas";
 import { NewRecipeFormValues } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MeasurementType, MeasurementUnit } from "@prisma/client";
-import { Loader2, Plus, Trash } from "lucide-react";
+import { Loader2, Plus, Trash, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import {
   Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -163,67 +166,81 @@ const EditRecipeForm = ({
           />
         </div>
         <div className="space-y-3">
-          <TypographyH3 classname="text-lg font-semibold">Malzemeler</TypographyH3>
-          {fields.map((field, index) => (
-            <div key={index}>
-              <TypographyH4 classname="text-sm font-medium">
-                {ingredients.filter((ingredient) => ingredient.id.toString() === field.ingredientId)[0].name}
-              </TypographyH4>
-              <div className="flex flex-col gap-3 md:flex-row">
-                <FormField
-                  control={form.control}
-                  key={field.id}
-                  name={`ingredients.${index}.amount`}
-                  render={({ field: fieldIndividual }) => (
-                    <FormItem className="flex-1">
-                      <FormControl>
-                        <Input {...fieldIndividual} placeholder="miktar" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  key={field.id + "unit"}
-                  name={`ingredients.${index}.unitId`}
-                  render={({ field: fieldIndividual }) => (
-                    <FormItem className="flex-1">
-                      <Select onValueChange={fieldIndividual.onChange} defaultValue={field.unitId.toString()}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Birim seç" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className="max-h-72">
-                          {units.map(
-                            (type) =>
-                              type.id ==
-                                ingredients.filter((ingredient) => field.ingredientId === ingredient.id.toString())[0]
-                                  .unitTypeId && (
-                                <SelectGroup key={type.id}>
-                                  <SelectLabel>{type.name}</SelectLabel>
-                                  {type.unit.map((unit) => (
-                                    <SelectItem value={unit.id.toString()} key={unit.id}>
-                                      {unit.name} ({unit.abbreviation})
-                                    </SelectItem>
-                                  ))}
-                                </SelectGroup>
-                              )
-                          )}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button variant="destructive" onClick={() => remove(index)}>
-                  <Trash className="mr-2 h-4 w-4" />
-                  Sil
-                </Button>
-              </div>
-            </div>
-          ))}
+          <div>
+            <TypographyH3 classname="text-xl font-semibold">Malzemeler</TypographyH3>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {fields.map((field, index) => (
+              <Card key={index} className="col-span-1">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle>
+                    {ingredients.filter((ingredient) => ingredient.id.toString() === field.ingredientId)[0].name}
+                  </CardTitle>
+                  <Button
+                    variant="ghost"
+                    onClick={() => remove(index)}
+                    size="sm"
+                    className="h-max w-max rounded-sm p-0 text-red-600 opacity-70 ring-offset-background transition-opacity hover:bg-background hover:text-red-600 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-3 md:flex-row">
+                    <FormField
+                      control={form.control}
+                      key={field.id}
+                      name={`ingredients.${index}.amount`}
+                      render={({ field: fieldIndividual }) => (
+                        <FormItem className="flex-1">
+                          <FormControl>
+                            <Input {...fieldIndividual} placeholder="miktar" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      key={field.id + "unit"}
+                      name={`ingredients.${index}.unitId`}
+                      render={({ field: fieldIndividual }) => (
+                        <FormItem className="flex-1">
+                          <Select onValueChange={fieldIndividual.onChange} defaultValue={field.unitId.toString()}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Birim seç" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="max-h-72">
+                              {units.map(
+                                (type) =>
+                                  type.id ==
+                                    ingredients.filter(
+                                      (ingredient) => field.ingredientId === ingredient.id.toString()
+                                    )[0].unitTypeId && (
+                                    <SelectGroup key={type.id}>
+                                      <SelectLabel>{type.name}</SelectLabel>
+                                      {type.unit.map((unit) => (
+                                        <SelectItem value={unit.id.toString()} key={unit.id}>
+                                          {unit.name} ({unit.abbreviation})
+                                        </SelectItem>
+                                      ))}
+                                    </SelectGroup>
+                                  )
+                              )}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

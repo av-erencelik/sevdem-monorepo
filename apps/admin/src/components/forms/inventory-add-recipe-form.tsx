@@ -25,7 +25,6 @@ import {
   PopoverContent,
   PopoverTrigger,
   TypographyH3,
-  TypographyH4,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
