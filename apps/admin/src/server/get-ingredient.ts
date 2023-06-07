@@ -2,7 +2,7 @@
 import { prisma } from "@/db";
 import { refactorRecipes } from "@/lib/server";
 import { getLastOneYear } from "@/lib/utils";
-import { InventoryAdd, InventorySubtract } from "@prisma/client";
+import { ConversionFactors, InventoryAdd, InventorySubtract, MeasurementUnit } from "@prisma/client";
 import dayjs from "dayjs";
 
 export async function getIngredient(id: string) {
@@ -20,6 +20,11 @@ export async function getIngredient(id: string) {
         select: {
           subtracts: true,
           adds: true,
+          unit: {
+            include: {
+              conversionFactorTo: true,
+            },
+          },
         },
       },
       price: {
@@ -120,11 +125,21 @@ export async function getIngredient(id: string) {
   const recipeRefactored = refactorRecipes(recipe);
 
   const priceHistory = ingredient?.price.map((price) => {
+    const unitPrice =
+      price.price.toNumber() / (price.measurement!.size.toNumber() * price.measurement!.quantity.toNumber());
     return {
       x: price.createdAt!,
-      y: price.price.toNumber() / (price.measurement!.quantity.toNumber() * price.measurement!.size.toNumber()),
+      y:
+        price.measurement!.unit.id === ingredient.inventory!.unit.id
+          ? unitPrice
+          : unitPrice /
+            ingredient
+              .inventory!.unit.conversionFactorTo.filter((unit) => unit.fromUnitId === price.measurement?.unit.id)[0]
+              .conversionFactor.toNumber(),
     };
   });
+
+  console.log(ingredient!.inventory!.unit.conversionFactorTo);
 
   // get the price increase or decrease percantage
   let priceChangePercantage = undefined;
@@ -145,8 +160,8 @@ export async function getIngredient(id: string) {
       type: ingredient.price[0].measurement!.unit.type,
       createdAt: ingredient.createdAt,
       updatedAt: ingredient.updatedAt,
-      inventory: totalInventory(ingredient.inventory),
-      abbreviation: ingredient.price[0].measurement!.unit.abbreviation,
+      inventory: totalInventory(ingredient.inventory, ingredient.inventory!.unit),
+      abbreviation: ingredient.inventory?.unit.abbreviation,
       recipeCount: recipe.length,
       recipes: recipeRefactored,
       priceHistory: { id: ingredient.name, data: priceHistory?.reverse() ?? [] },
@@ -162,10 +177,33 @@ function totalInventory(
   inventory: {
     adds: InventoryAdd[];
     subtracts: InventorySubtract[];
-  } | null
+  } | null,
+  unit: MeasurementUnit & {
+    conversionFactorTo: ConversionFactors[];
+  }
 ) {
   if (!inventory) return 0;
-  const adds = inventory.adds.reduce((acc, curr) => acc + curr.quantity.toNumber(), 0);
-  const subtracts = inventory.subtracts.reduce((acc, curr) => acc + curr.quantity.toNumber(), 0);
+  const adds = inventory.adds.reduce((acc, add) => {
+    if (add.unitId === unit.id) {
+      return (acc += add.quantity.toNumber());
+    } else {
+      return (
+        acc +
+        add.quantity.toNumber() *
+          unit.conversionFactorTo.filter((unit) => unit.fromUnitId === add.unitId)[0].conversionFactor.toNumber()
+      );
+    }
+  }, 0);
+  const subtracts = inventory.subtracts.reduce((acc, curr) => {
+    if (curr.unitId === unit.id) {
+      return (acc += curr.quantity.toNumber());
+    } else {
+      return (
+        acc +
+        curr.quantity.toNumber() *
+          unit.conversionFactorTo.filter((unit) => unit.fromUnitId === curr.unitId)[0].conversionFactor.toNumber()
+      );
+    }
+  }, 0);
   return adds - subtracts;
 }

@@ -92,4 +92,11 @@ const getPercantageText = (percantage: number | undefined) => {
         <span>{`-%${Math.abs(percantage).toFixed(2)}`}</span>
       </div>
     );
+  if (percantage == 0)
+    return (
+      <div className="flex items-center">
+        <ArrowDown className="h-6 w-6" />
+        <span>{`%${Math.abs(percantage).toFixed(2)}`}</span>
+      </div>
+    );
 };

@@ -65,7 +65,7 @@ export const columns: ColumnDef<IngredientInventoryTable>[] = [
     },
   },
   {
-    accessorKey: "price",
+    accessorKey: "totalPrice",
     id: "değer",
     header: ({ column }) => {
       return (
