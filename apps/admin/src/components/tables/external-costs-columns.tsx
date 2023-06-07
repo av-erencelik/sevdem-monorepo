@@ -1,16 +1,17 @@
 "use client";
-import { RecipeInventoryTable } from "@/types/types";
+import { ExternalCosts } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "ui";
+import Link from "next/link";
+import { Button } from "ui";
 import "dayjs/locale/tr";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { deleteCreatedItem } from "@/server/mutations/inventory";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "ui";
+import { deleteExternalCost } from "@/server/external-costs";
 dayjs.locale("tr");
-export const columns: ColumnDef<RecipeInventoryTable>[] = [
+export const columns: ColumnDef<ExternalCosts>[] = [
   {
     accessorKey: "name",
     id: "isim",
@@ -18,16 +19,16 @@ export const columns: ColumnDef<RecipeInventoryTable>[] = [
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           İsim
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 min-h-[1rem] w-4 min-w-[1rem]" />
         </Button>
       );
     },
     cell: ({ row }) => {
       const name = row.original.name;
-      const id = row.original.recipeId;
+      const id = row.original.id;
       return (
         <div>
-          <Link href={`/tarifler/${id}`} className="font-medium text-sky-600 hover:underline">
+          <Link href={`tarifler/${id}`} className="font-medium text-sky-600 hover:underline">
             {name}
           </Link>
         </div>
@@ -35,42 +36,22 @@ export const columns: ColumnDef<RecipeInventoryTable>[] = [
     },
   },
   {
-    accessorKey: "yieldCreated",
-    id: "uretilenMiktar",
+    accessorKey: "cost",
+    id: "Ücret",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Üretilen Ürün
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          Toplam Maliyet
+          <ArrowUpDown className="ml-2 h-4 min-h-[1rem] w-4 min-w-[1rem]" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const yieldCreated = row.original.yieldCreated;
-      const yieldName = row.original.yieldName;
-      const formatted = yieldCreated + " " + yieldName;
-      return (
-        <div>
-          <div className="w-28 text-center">{formatted}</div>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "price",
-    id: "değer",
-    header: ({ column }) => {
-      return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Değer
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const price = row.original.price;
-      const yieldCreated = row.original.yieldCreated;
-      const formatted = "₺" + price * yieldCreated;
+      const price = row.original.cost;
+      const formatted = new Intl.NumberFormat("tr-TR", {
+        style: "currency",
+        currency: "TRY",
+      }).format(price);
       return (
         <div>
           <div className="w-20 text-center">{formatted}</div>
@@ -112,7 +93,7 @@ export const columns: ColumnDef<RecipeInventoryTable>[] = [
       const router = useRouter();
       const action = () => {
         startTransition(() => {
-          deleteCreatedItem(id);
+          deleteExternalCost(id);
         });
         router.refresh();
       };

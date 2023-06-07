@@ -1,5 +1,5 @@
 "use server";
-import { getLast30days, percIncrease } from "@/lib/utils";
+import { getLast30days, getLastOneYear, percIncrease } from "@/lib/utils";
 import dayjs from "dayjs";
 import { getExternalCosts, getMonthlySales } from "./revenue";
 import { Prisma } from "@prisma/client";
@@ -46,16 +46,37 @@ const salesWithRecipes = Prisma.validator<Prisma.SaleArgs>()({
 });
 type SalesWithRecipes = Prisma.SaleGetPayload<typeof salesWithRecipes>[];
 
-export default async function getSummary() {
-  const { startDate, endDate } = getLast30days(dayjs());
-  const { startDate: lastMonthStartDate, endDate: lastMonthEndDate } = getLast30days(dayjs().subtract(31, "days"));
+export default async function getSummary(isYearly = false, month = dayjs().month()) {
+  if (month > 11) throw new Error("Invalid month");
+  if (month < 0) throw new Error("Invalid month");
+  let startDate: Date;
+  let endDate: Date;
+  let compareStartDate: Date;
+  let compareEndDate: Date;
+  if (isYearly) {
+    const { startDate: currentYearStartDate, endDate: currentYearEndDate } = getLastOneYear(dayjs());
+    const { startDate: lastYearStartDate, endDate: lastYearEndDate } = getLastOneYear(dayjs().subtract(1, "year"));
+    startDate = currentYearStartDate;
+    endDate = currentYearEndDate;
+    compareStartDate = lastYearStartDate;
+    compareEndDate = lastYearEndDate;
+  } else {
+    const { startDate: currentMonthStartDate, endDate: currentMonthEndDate } = getLast30days(dayjs().month(month));
+    const { startDate: lastMonthStartDate, endDate: lastMonthEndDate } = getLast30days(
+      dayjs().month(month).subtract(1, "M")
+    );
+    startDate = currentMonthStartDate;
+    endDate = currentMonthEndDate;
+    compareStartDate = lastMonthStartDate;
+    compareEndDate = lastMonthEndDate;
+  }
 
   const thisMonthExternalCosts = await getExternalCosts(startDate, endDate);
-  const lastMonthCosts = await getExternalCosts(lastMonthStartDate, lastMonthEndDate);
+  const lastMonthCosts = await getExternalCosts(compareStartDate, compareEndDate);
   const thisMonthlySales = await getMonthlySales(startDate, endDate);
-  const lastMonthSales = await getMonthlySales(lastMonthStartDate, lastMonthEndDate);
+  const lastMonthSales = await getMonthlySales(compareStartDate, compareEndDate);
   const thisMonthOrders = await totalOrders(startDate, endDate);
-  const lastMonthOrders = await totalOrders(lastMonthStartDate, lastMonthEndDate);
+  const lastMonthOrders = await totalOrders(compareStartDate, compareEndDate);
   const calculatedThisMonthMostSoldRecipe = getMonthlyMostSoldRecipe(thisMonthlySales);
   const calculatedLastMonthMostSoldRecipe = getMonthlyMostSoldRecipe(lastMonthSales);
   const calculatedThisMonthProfit =

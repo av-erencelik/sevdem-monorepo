@@ -1,6 +1,5 @@
 "use client";
 
-import { deleteIngredient } from "@/server/mutations/ingredient";
 import { deleteRecipe } from "@/server/mutations/recipe";
 import { RecipeTable } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";

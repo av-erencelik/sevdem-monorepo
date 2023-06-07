@@ -86,3 +86,18 @@ export type IngredientInventoryTable = {
   totalPrice: number;
   createdAt: Date;
 };
+
+export type ExternalCosts = {
+  id: number;
+  createdAt: Date;
+  name: string;
+  cost: Decimal;
+};
+
+export type SaleTable = {
+  id: number;
+  name: string;
+  saleDate: Date;
+  totalSoldItem: number;
+  totalSale: number;
+};

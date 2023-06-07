@@ -61,12 +61,8 @@ export const sidebarConfig: SidebarNavItem[] = [
         path: "/ekonomi",
       },
       {
-        title: "Satışlar",
-        path: "/satis",
-      },
-      {
         title: "Yeni Satış Ekle",
-        path: "/satis/yeni",
+        path: "/ekonomi/satis/yeni",
       },
       {
         title: "Yeni Gider Ekle",

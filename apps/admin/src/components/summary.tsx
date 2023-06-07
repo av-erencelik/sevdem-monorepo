@@ -2,7 +2,7 @@ import getSummary from "@/server/get-summary";
 import { Banknote, Cookie, CreditCard, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "ui";
 
-const Summary = async () => {
+const Summary = async ({ isYearly, month }: { isYearly?: boolean; month?: number }) => {
   const {
     diffProfit,
     diffSales,
@@ -11,7 +11,7 @@ const Summary = async () => {
     diffOrders,
     thisMonthOrders,
     thisMonthMostSoldRecipe,
-  } = await getSummary();
+  } = await getSummary(isYearly, month);
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card className="shadow-md">
@@ -22,7 +22,7 @@ const Summary = async () => {
         <CardContent>
           <div className="text-2xl font-bold">{thisMonthProfit} TL</div>
           <p className="text-xs text-muted-foreground">
-            Geçen aya göre {diffProfit}% {diffProfit < 0 ? "düşüş" : "artış"}
+            {isYearly ? "Geçen yıla göre" : "Geçen aya göre"} {diffProfit}% {diffProfit < 0 ? "düşüş" : "artış"}
           </p>
         </CardContent>
       </Card>
@@ -34,7 +34,7 @@ const Summary = async () => {
         <CardContent>
           <div className="text-2xl font-bold">{thisMonthSales} Adet</div>
           <p className="text-xs text-muted-foreground">
-            Geçen aya göre {diffSales}% {diffSales < 0 ? "düşüş" : "artış"}
+            {isYearly ? "Geçen yıla göre" : "Geçen aya göre"} {diffSales}% {diffSales < 0 ? "düşüş" : "artış"}
           </p>
         </CardContent>
       </Card>
@@ -46,7 +46,7 @@ const Summary = async () => {
         <CardContent>
           <div className="text-2xl font-bold">{thisMonthOrders} TL</div>
           <p className="text-xs text-muted-foreground">
-            Geçen aya göre {diffOrders}% {diffOrders < 0 ? "düşüş" : "artış"}
+            {isYearly ? "Geçen yıla göre" : "Geçen aya göre"} {diffOrders}% {diffOrders < 0 ? "düşüş" : "artış"}
           </p>
         </CardContent>
       </Card>
@@ -58,7 +58,9 @@ const Summary = async () => {
         <CardContent>
           <div className="text-2xl font-bold">{thisMonthMostSoldRecipe ? thisMonthMostSoldRecipe[0] : "Yok"}</div>
           <p className="text-xs text-muted-foreground">
-            {thisMonthMostSoldRecipe ? `Bu ay ${thisMonthMostSoldRecipe[1]}` : "Bu ay daha satış yapmadın"}
+            {thisMonthMostSoldRecipe
+              ? `${isYearly ? "Bu yıl" : "Bu ay"} ${thisMonthMostSoldRecipe[1]}`
+              : `${isYearly ? "Bu yıl" : "Bu ay"} daha satış yapmadın`}
           </p>
         </CardContent>
       </Card>

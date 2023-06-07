@@ -16,8 +16,8 @@ export function localizeError(error: Error) {
 }
 
 export function getLast30days(date: dayjs.Dayjs) {
-  const startDate = date.subtract(30, "day").toDate();
-  const endDate = date.toDate();
+  const startDate = date.startOf("M").toDate();
+  const endDate = date.endOf("M").toDate();
   return { startDate, endDate };
 }
 

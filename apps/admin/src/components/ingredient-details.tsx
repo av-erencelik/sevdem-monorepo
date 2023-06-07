@@ -3,17 +3,7 @@
 import { type EditIngredient } from "@/types/types";
 import dayjs from "dayjs";
 import "dayjs/locale/tr";
-import {
-  ArrowDown,
-  ArrowUp,
-  Banknote,
-  CalendarDays,
-  LineChart,
-  Refrigerator,
-  TrendingDown,
-  TrendingUp,
-  UtensilsCrossed,
-} from "lucide-react";
+import { ArrowDown, ArrowUp, Banknote, CalendarDays, LineChart, Refrigerator } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "ui";
 dayjs.locale("tr");
 const IngredientDetails = ({

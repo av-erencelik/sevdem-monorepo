@@ -1,8 +1,8 @@
 import { getInventoryRecipes } from "@/server/get-inventory";
-import { Link } from "lucide-react";
 import { Separator } from "ui";
 import DataTable from "./data-table";
 import { columns } from "./columns";
+import Link from "next/link";
 
 const InventoryRecipesPage = async () => {
   const inventoryRecipes = await getInventoryRecipes();

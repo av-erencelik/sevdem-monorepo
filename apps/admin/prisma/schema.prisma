@@ -208,6 +208,7 @@ model RecipePriceHistory {
 model Sale {
   id       Int        @id @unique(map: "id") @default(autoincrement())
   saleItem SaleItem[]
+  name     String     @db.VarChar(255)
   saleDate DateTime   @default(now()) @db.Timestamp(0)
   total    Decimal    @db.Decimal(10, 2)
 
