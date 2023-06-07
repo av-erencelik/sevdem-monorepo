@@ -25,7 +25,7 @@ const MobileNav = () => {
         <MobileLink href="/">
           <span className="ml-6 font-bold text-sky-600">Sevdem Admin</span>
         </MobileLink>
-        <ScrollArea className="my-4 h-[calc(100vh-65px)] pb-10 pl-6">
+        <ScrollArea className="my-4 h-[calc(100vh-100px)] pb-10 pl-6">
           <div className="flex flex-col space-y-3 pr-5">
             {items.map(
               (item, index) =>

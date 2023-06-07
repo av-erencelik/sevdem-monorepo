@@ -37,7 +37,7 @@ const MainNav = () => {
           Tarifler
         </Link>
         <Link
-          href="/envanter"
+          href="/envanter/tarifler"
           className={cn(
             "rounded-md p-2 transition-colors",
             pathname?.startsWith("/envanter") ? "bg-sky-100 text-sky-600" : "text-foreground/70 hover:text-foreground"
