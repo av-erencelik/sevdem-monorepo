@@ -60,9 +60,12 @@ export default async function getSummary() {
   const calculatedLastMonthMostSoldRecipe = getMonthlyMostSoldRecipe(lastMonthSales);
   const calculatedThisMonthProfit =
     calculateMonthlyTotalSales(thisMonthlySales) -
+    (thisMonthOrders._sum!.totalPrice ? thisMonthOrders._sum!.totalPrice.toNumber() : 0) -
     (thisMonthExternalCosts._sum!.cost ? thisMonthExternalCosts._sum.cost.toNumber() : 0);
   const calculatedLastMonthProfit =
-    calculateMonthlyTotalSales(lastMonthSales) - (lastMonthCosts._sum!.cost ? lastMonthCosts._sum.cost.toNumber() : 0);
+    calculateMonthlyTotalSales(lastMonthSales) -
+    (lastMonthCosts._sum!.cost ? lastMonthCosts._sum.cost.toNumber() : 0) -
+    (lastMonthOrders._sum!.totalPrice ? lastMonthOrders._sum!.totalPrice.toNumber() : 0);
   const calculatedThisMonthSales = totalSoldItems(thisMonthlySales);
   const calculatedLastMonthSales = totalSoldItems(lastMonthSales);
   return {
