@@ -64,7 +64,7 @@ const LoginForm = () => {
         <Button type="submit" disabled={isMutating} className="w-full">
           {isMutating ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Lütfen bekleyin...
             </>
           ) : (
             "Giriş Yap"
