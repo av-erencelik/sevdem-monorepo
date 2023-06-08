@@ -1,10 +1,10 @@
 import IngredientDetails from "@/components/ingredient-details";
-import RecipeTable from "@/components/tables/recipe-table";
 import { getIngredient } from "@/server/get-ingredient";
 import { TypographyH4 } from "ui";
 import { columns } from "@/components/tables/recipe-columns";
 import PriceHistory from "@/components/charts/price-history";
 import Link from "next/link";
+import DataTable from "@/components/tables/data-table";
 
 const IngredientDetailsPage = async ({ params }: { params: { ingredientId: string } }) => {
   const ingredient = await getIngredient(params.ingredientId);
@@ -51,7 +51,13 @@ const IngredientDetailsPage = async ({ params }: { params: { ingredientId: strin
 
       <div className="mt-6 rounded-lg border border-border p-10 pb-16 shadow-md">
         <TypographyH4 classname="mb-4">Kullanan Tarifler</TypographyH4>
-        <RecipeTable columns={columns} data={ingredient.recipes} />
+        <DataTable
+          columns={columns}
+          data={ingredient.recipes}
+          title="Daha önce bir tarif eklememişsiniz"
+          href="/tarifler/yeni"
+          buttonText="Yeni Tarif Ekle"
+        />
       </div>
     </>
   );
