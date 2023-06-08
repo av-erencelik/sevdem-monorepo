@@ -4,7 +4,6 @@ DataTable;
 import { getExternalCostsEconomy } from "@/server/external-costs";
 import { columns } from "@/components/tables/external-costs-columns";
 import { getSalesEconomy } from "@/server/sales";
-import SaleTable from "@/components/tables/sale-table";
 import { saleColumns } from "@/components/tables/sales-columns";
 import MonthSelect from "@/components/month-select";
 import dayjs from "dayjs";
