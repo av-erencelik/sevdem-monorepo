@@ -1,8 +1,9 @@
 import { getIngredientInventory } from "@/server/get-inventory";
 import Link from "next/link";
 import { Separator } from "ui";
-import DataTable from "./data-table";
+
 import { columns } from "./columns";
+import DataTable from "@/components/tables/data-table";
 
 const IngredientsInventoryPage = async () => {
   const ingredients = await getIngredientInventory();
@@ -24,7 +25,13 @@ const IngredientsInventoryPage = async () => {
       </div>
       <Separator className="my-6" />
       <div>
-        <DataTable data={ingredients} columns={columns} />
+        <DataTable
+          data={ingredients}
+          columns={columns}
+          title="Daha önce bir malzeme eklememişsiniz."
+          href="/envanter/malzemeler/yeni"
+          buttonText="Yeni Stok Ekle"
+        />
       </div>
     </div>
   );

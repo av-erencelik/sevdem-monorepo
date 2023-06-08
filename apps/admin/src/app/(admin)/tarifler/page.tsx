@@ -1,5 +1,6 @@
-import { columns } from "@/components/tables/columns";
-import RecipeTable from "@/components/tables/recipe-table";
+import { columns } from "@/components/tables/recipe-columns";
+import DataTable from "@/components/tables/data-table";
+
 import { getRecipes } from "@/server/get-recipes";
 import Link from "next/link";
 import React from "react";
@@ -23,7 +24,13 @@ const RecipesPage = async () => {
       </div>
       <Separator className="my-6" />
       <div>
-        <RecipeTable data={recipes} columns={columns} />
+        <DataTable
+          data={recipes}
+          columns={columns}
+          title="Daha önce bir tarif eklememişsiniz"
+          href="/tarifler/yeni"
+          buttonText="Yeni Malzeme Ekle"
+        />
       </div>
     </div>
   );

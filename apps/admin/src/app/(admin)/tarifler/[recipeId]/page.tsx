@@ -4,8 +4,8 @@ import RecipeDetails from "@/components/recipe-details";
 import { getRecipe } from "@/server/get-recipe";
 import Link from "next/link";
 import { TypographyH4 } from "ui";
-import DataTable from "../../malzemeler/data-table";
 import { columns } from "../../malzemeler/columns";
+import DataTable from "@/components/tables/data-table";
 
 const RecipeDetailsPage = async ({ params }: { params: { recipeId: string } }) => {
   const recipe = await getRecipe(params.recipeId);
@@ -47,7 +47,13 @@ const RecipeDetailsPage = async ({ params }: { params: { recipeId: string } }) =
       </div>
       <div className="mt-6 rounded-lg border border-border p-10 pb-16 shadow-md">
         <TypographyH4>Kullanılan Malzemeler</TypographyH4>
-        <DataTable data={recipe.ingredientsDataTable} columns={columns} />
+        <DataTable
+          data={recipe.ingredientsDataTable}
+          columns={columns}
+          title="Daha önce bir malzemeyi bir tarifte kullanmamışsınız."
+          buttonText="Yeni Tarif Ekle"
+          href="/tarifler/yeni"
+        />
       </div>
     </>
   );

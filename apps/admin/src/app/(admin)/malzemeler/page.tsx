@@ -1,9 +1,10 @@
 import { getIngredients } from "@/server/get-ingredients";
 import React from "react";
 import { Separator } from "ui";
-import DataTable from "./data-table";
+
 import { columns } from "./columns";
 import Link from "next/link";
+import DataTable from "@/components/tables/data-table";
 
 const Page = async () => {
   const ingredients = await getIngredients();
@@ -24,7 +25,14 @@ const Page = async () => {
 
       <Separator className="my-6" />
       <div>
-        <DataTable data={ingredients} data-superjson columns={columns} />
+        <DataTable
+          data={ingredients}
+          data-superjson
+          columns={columns}
+          title="Daha önce bir malzeme eklememişsiniz."
+          buttonText="Yeni Malzeme Ekle"
+          href="/malzemeler/yeni"
+        />
       </div>
     </div>
   );

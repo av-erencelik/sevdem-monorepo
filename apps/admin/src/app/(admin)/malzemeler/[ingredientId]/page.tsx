@@ -2,7 +2,7 @@ import IngredientDetails from "@/components/ingredient-details";
 import RecipeTable from "@/components/tables/recipe-table";
 import { getIngredient } from "@/server/get-ingredient";
 import { TypographyH4 } from "ui";
-import { columns } from "@/components/tables/columns";
+import { columns } from "@/components/tables/recipe-columns";
 import PriceHistory from "@/components/charts/price-history";
 import Link from "next/link";
 

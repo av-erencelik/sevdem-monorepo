@@ -21,9 +21,12 @@ import Link from "next/link";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  title: string;
+  href: string;
+  buttonText: string;
 }
 
-const SaleTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) => {
+const DataTable = <TData, TValue>({ columns, data, buttonText, href, title }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -107,9 +110,9 @@ const SaleTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValu
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  <p className="mb-2">Daha önce bir satış eklememişsiniz.</p>
-                  <Link href="/ekonomi/satis/yeni" className="text-base font-semibold text-sky-600 hover:underline">
-                    Yeni Satış Ekle
+                  <p className="mb-2">{title}</p>
+                  <Link href={href} className="text-base font-semibold text-sky-600 hover:underline">
+                    {buttonText}
                   </Link>
                 </TableCell>
               </TableRow>
@@ -132,4 +135,4 @@ const SaleTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValu
   );
 };
 
-export default SaleTable;
+export default DataTable;
