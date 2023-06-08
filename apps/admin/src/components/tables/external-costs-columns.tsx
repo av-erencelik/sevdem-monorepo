@@ -9,7 +9,7 @@ import "dayjs/locale/tr";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "ui";
-import { deleteExternalCost } from "@/server/external-costs";
+import { deleteExternalCost } from "@/server/mutations/economy";
 dayjs.locale("tr");
 export const columns: ColumnDef<ExternalCosts>[] = [
   {
@@ -28,9 +28,7 @@ export const columns: ColumnDef<ExternalCosts>[] = [
       const id = row.original.id;
       return (
         <div>
-          <Link href={`tarifler/${id}`} className="font-medium text-sky-600 hover:underline">
-            {name}
-          </Link>
+          <div className="font-medium">{name}</div>
         </div>
       );
     },

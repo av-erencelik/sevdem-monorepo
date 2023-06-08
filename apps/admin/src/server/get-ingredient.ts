@@ -138,9 +138,6 @@ export async function getIngredient(id: string) {
               .conversionFactor.toNumber(),
     };
   });
-
-  console.log(ingredient!.inventory!.unit.conversionFactorTo);
-
   // get the price increase or decrease percantage
   let priceChangePercantage = undefined;
   if (priceHistory && priceHistory.length > 1) {

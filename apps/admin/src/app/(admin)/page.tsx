@@ -27,7 +27,7 @@ export default async function Home() {
         </Link>
       </div>
       {/* @ts-expect-error Server Component */}
-      <Summary />
+      <Summary month={dayjs().month()} />
       {/* @ts-expect-error Server Component */}
       <Tasks />
     </section>

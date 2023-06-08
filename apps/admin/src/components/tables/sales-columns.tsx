@@ -29,9 +29,7 @@ export const saleColumns: ColumnDef<SaleTable>[] = [
       const id = row.original.id;
       return (
         <div>
-          <Link href={`tarifler/${id}`} className="font-medium text-sky-600 hover:underline">
-            {name}
-          </Link>
+          <div className="font-medium">{name}</div>
         </div>
       );
     },

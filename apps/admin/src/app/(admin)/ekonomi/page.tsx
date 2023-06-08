@@ -7,10 +7,10 @@ import { getSalesEconomy } from "@/server/sales";
 import SaleTable from "@/components/tables/sale-table";
 import { saleColumns } from "@/components/tables/sales-columns";
 import MonthSelect from "@/components/month-select";
+import dayjs from "dayjs";
 
 const EconomyPage = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
-  console.log(searchParams);
-  const month = searchParams.month ? parseInt(searchParams.month as string) : undefined;
+  const month = searchParams.month ? parseInt(searchParams.month as string) : 12;
   const externalCosts = await getExternalCostsEconomy(month);
   const sales = await getSalesEconomy(month);
   return (
@@ -23,12 +23,12 @@ const EconomyPage = async ({ searchParams }: { searchParams: { [key: string]: st
         <MonthSelect />
       </div>
       {/* @ts-expect-error Server Component */}
-      <Summary isYearly={searchParams.month ? false : true} month={month} />
+      <Summary month={month} />
       <Container title="Satışlar">
-        <SaleTable data={sales} columns={saleColumns} />
+        <SaleTable data={sales} columns={saleColumns} data-superjson />
       </Container>
       <Container title="Giderler">
-        <DataTable data={externalCosts} columns={columns} />
+        <DataTable data={externalCosts} columns={columns} data-superjson />
       </Container>
     </section>
   );

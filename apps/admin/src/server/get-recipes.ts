@@ -99,3 +99,29 @@ export async function getRecipesForInventory() {
     price: recipe.priceHistory[0].price.toNumber() / recipe.yieldCount,
   }));
 }
+
+export async function getRecipesForEconomy() {
+  const recipes = await prisma.recipe.findMany({
+    select: {
+      id: true,
+      name: true,
+      sellPrice: {
+        select: {
+          price: true,
+          id: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1,
+      },
+    },
+  });
+
+  return recipes.map((recipe) => ({
+    id: recipe.id,
+    name: recipe.name,
+    price: recipe.sellPrice[0].price.toNumber(),
+    sellPriceId: recipe.sellPrice[0].id,
+  }));
+}

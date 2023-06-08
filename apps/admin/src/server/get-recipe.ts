@@ -16,6 +16,14 @@ export async function getRecipe(recipeId: string) {
       yieldCreated: true,
     },
   });
+  const saleItemsSums = await prisma.saleItem.aggregate({
+    where: {
+      recipeId: parseInt(recipeId),
+    },
+    _sum: {
+      yieldSold: true,
+    },
+  });
   const recipe = await prisma.recipe.findUnique({
     where: {
       id: parseInt(recipeId),
@@ -108,7 +116,11 @@ export async function getRecipe(recipeId: string) {
     });
   }
 
-  return { ...recipeDetails, createdItems: createdItemsSum._sum.yieldCreated };
+  return {
+    ...recipeDetails,
+    createdItems: createdItemsSum._sum.yieldCreated,
+    sellQuantity: saleItemsSums._sum.yieldSold ?? 0,
+  };
 }
 
 function refactorRecipeDetails(recipe: RecipeDetails) {
@@ -122,7 +134,6 @@ function refactorRecipeDetails(recipe: RecipeDetails) {
     ...refactoredRecipe[0],
     ingredientsDataTable,
     ingredientCosts: refactoredIngredientCosts,
-    sellQuantity: recipe.sellQuantity,
     costHistory: { id: recipe.id.toString(), data: costHistory },
     sellPriceHistory: { id: recipe.id.toString(), data: sellPriceHistory },
   };

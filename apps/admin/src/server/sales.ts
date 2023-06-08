@@ -1,15 +1,26 @@
 "use server";
 import { prisma } from "@/db";
-import { getLast30days } from "@/lib/utils";
+import { getLast30days, getLastOneYear } from "@/lib/utils";
 import dayjs from "dayjs";
 
-export async function getSalesEconomy(month = dayjs().month()) {
-  const { startDate, endDate } = getLast30days(dayjs().month(month));
+export async function getSalesEconomy(month: number) {
+  let startDate: Date;
+  let endDate: Date;
+  if (month === 12) {
+    const { startDate: startDateYear, endDate: endDateYear } = getLastOneYear(dayjs());
+    startDate = startDateYear;
+    endDate = endDateYear;
+  } else {
+    const { startDate: startDateMonth, endDate: endDateMonth } = getLast30days(dayjs().set("month", month));
+    startDate = startDateMonth;
+    endDate = endDateMonth;
+  }
+
   const sales = await prisma.sale.findMany({
     where: {
       saleDate: {
-        gte: startDate.toISOString(),
-        lte: endDate.toISOString(),
+        gte: startDate,
+        lte: endDate,
       },
     },
     select: {

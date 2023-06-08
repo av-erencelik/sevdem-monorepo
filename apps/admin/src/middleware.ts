@@ -1,30 +1,7 @@
 import { authMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
-import { env } from "./env.mjs";
-const redis = new Redis({
-  url: env.UPSTASH_REDIS_REST_URL,
-  token: env.UPSTASH_REDIS_REST_TOKEN,
-});
-
-const ratelimit = new Ratelimit({
-  redis: redis,
-  limiter: Ratelimit.slidingWindow(20, "1 s"),
-});
-
 export default authMiddleware({
-  beforeAuth: async (req, evt) => {
-    const ip = req.ip ?? "127.0.0.1";
-    if (req.nextUrl.pathname.startsWith("/api") || req.nextUrl.pathname.startsWith("/")) {
-      const { success, pending } = await ratelimit.limit(ip);
-      evt.waitUntil(pending);
-      if (!success) {
-        return NextResponse.redirect(new URL("/blocked", req.url));
-      }
-    }
-  },
   afterAuth(auth, req, evt) {
     const isAuthPage = req.nextUrl.pathname.startsWith("/giris");
     const { userId } = auth;

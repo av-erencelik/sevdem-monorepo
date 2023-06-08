@@ -145,7 +145,7 @@ const Tasks = async () => {
                 Yeni Tarif Ekle
               </Link>
               <Link
-                href="/envanter/yeni"
+                href="/envanter/malzemeler/yeni"
                 className={cn(
                   "flex w-full items-center whitespace-nowrap rounded-md p-2 transition-colors hover:bg-muted hover:text-foreground"
                 )}
@@ -153,7 +153,7 @@ const Tasks = async () => {
                 Satın Alım Ekle
               </Link>
               <Link
-                href="/satis/yeni"
+                href="/ekonomi/satis/yeni"
                 className={cn(
                   "flex w-full items-center whitespace-nowrap rounded-md p-2 transition-colors hover:bg-muted hover:text-foreground"
                 )}

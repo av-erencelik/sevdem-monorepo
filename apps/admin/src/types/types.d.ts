@@ -4,7 +4,9 @@ import {
   editIngredientSchema,
   inventoryAddIngredientSchema,
   inventoryAddRecipeSchema,
+  newExternalCostSchema,
   newIngredientSchema,
+  newSaleSchema,
   signInSchema,
 } from "./schemas";
 import type { LucideIcon } from "lucide-react";
@@ -37,6 +39,10 @@ export type NewRecipeFormValues = z.infer<typeof NewRecipeSchema>;
 export type InventoryAddRecipeFormValues = z.infer<typeof inventoryAddRecipeSchema>;
 
 export type InventoryAddIngredientFormValues = z.infer<typeof inventoryAddIngredientSchema>;
+
+export type NewExternalCostFormValues = z.infer<typeof newExternalCostSchema>;
+
+export type NewSaleFormValus = z.infer<typeof newSaleSchema>;
 
 export type EditIngredient = {
   id: number;
@@ -100,4 +106,11 @@ export type SaleTable = {
   saleDate: Date;
   totalSoldItem: number;
   totalSale: number;
+};
+
+export type RecipeForEconomy = {
+  id: number;
+  name: string;
+  price: number;
+  sellPriceId: number;
 };

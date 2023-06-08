@@ -2,7 +2,7 @@ import getSummary from "@/server/get-summary";
 import { Banknote, Cookie, CreditCard, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "ui";
 
-const Summary = async ({ isYearly, month }: { isYearly?: boolean; month?: number }) => {
+const Summary = async ({ month }: { month: number }) => {
   const {
     diffProfit,
     diffSales,
@@ -11,7 +11,7 @@ const Summary = async ({ isYearly, month }: { isYearly?: boolean; month?: number
     diffOrders,
     thisMonthOrders,
     thisMonthMostSoldRecipe,
-  } = await getSummary(isYearly, month);
+  } = await getSummary(month);
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card className="shadow-md">
@@ -22,7 +22,8 @@ const Summary = async ({ isYearly, month }: { isYearly?: boolean; month?: number
         <CardContent>
           <div className="text-2xl font-bold">{thisMonthProfit} TL</div>
           <p className="text-xs text-muted-foreground">
-            {isYearly ? "Geçen yıla göre" : "Geçen aya göre"} {diffProfit}% {diffProfit < 0 ? "düşüş" : "artış"}
+            {month === 12 ? "Geçen yıla göre" : "Geçen aya göre"} ₺{Math.abs(diffProfit)}{" "}
+            {diffProfit < 0 ? "düşüş" : "artış"}
           </p>
         </CardContent>
       </Card>
@@ -34,7 +35,7 @@ const Summary = async ({ isYearly, month }: { isYearly?: boolean; month?: number
         <CardContent>
           <div className="text-2xl font-bold">{thisMonthSales} Adet</div>
           <p className="text-xs text-muted-foreground">
-            {isYearly ? "Geçen yıla göre" : "Geçen aya göre"} {diffSales}% {diffSales < 0 ? "düşüş" : "artış"}
+            {month === 12 ? "Geçen yıla göre" : "Geçen aya göre"} %{diffSales} {diffSales < 0 ? "düşüş" : "artış"}
           </p>
         </CardContent>
       </Card>
@@ -46,7 +47,7 @@ const Summary = async ({ isYearly, month }: { isYearly?: boolean; month?: number
         <CardContent>
           <div className="text-2xl font-bold">{thisMonthOrders} TL</div>
           <p className="text-xs text-muted-foreground">
-            {isYearly ? "Geçen yıla göre" : "Geçen aya göre"} {diffOrders}% {diffOrders < 0 ? "düşüş" : "artış"}
+            {month === 12 ? "Geçen yıla göre" : "Geçen aya göre"} %{diffOrders} {diffOrders < 0 ? "düşüş" : "artış"}
           </p>
         </CardContent>
       </Card>
@@ -59,8 +60,8 @@ const Summary = async ({ isYearly, month }: { isYearly?: boolean; month?: number
           <div className="text-2xl font-bold">{thisMonthMostSoldRecipe ? thisMonthMostSoldRecipe[0] : "Yok"}</div>
           <p className="text-xs text-muted-foreground">
             {thisMonthMostSoldRecipe
-              ? `${isYearly ? "Bu yıl" : "Bu ay"} ${thisMonthMostSoldRecipe[1]}`
-              : `${isYearly ? "Bu yıl" : "Bu ay"} daha satış yapmadın`}
+              ? `${month === 12 ? "Bu yıl" : "Bu ay"} ${thisMonthMostSoldRecipe[1]} adet satıldı`
+              : `${month === 12 ? "Bu yıl" : "Bu ay"} daha satış yapmadın`}
           </p>
         </CardContent>
       </Card>

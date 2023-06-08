@@ -162,7 +162,6 @@ const NewIngredientForm = ({
             )}
           ></FormField>
         </div>
-
         <Button type="submit" className="w-full md:w-max" disabled={isPending}>
           {isPending ? (
             <>

@@ -16,14 +16,14 @@ export function localizeError(error: Error) {
 }
 
 export function getLast30days(date: dayjs.Dayjs) {
-  const startDate = date.startOf("M").toDate();
-  const endDate = date.endOf("M").toDate();
+  const startDate = date.startOf("month").toDate();
+  const endDate = date.endOf("month").toDate();
   return { startDate, endDate };
 }
 
 export function getLastOneYear(date: dayjs.Dayjs) {
-  const startDate = date.subtract(1, "year").toDate();
-  const endDate = date.toDate();
+  const startDate = date.startOf("year").toDate();
+  const endDate = date.endOf("year").toDate();
   return { startDate, endDate };
 }
 
