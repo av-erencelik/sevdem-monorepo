@@ -1,5 +1,4 @@
-import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { SidebarOpenIcon } from "lucide-react";
 import { Button } from "ui";
 

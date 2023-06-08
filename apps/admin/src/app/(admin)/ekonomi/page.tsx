@@ -6,7 +6,6 @@ import { columns } from "@/components/tables/external-costs-columns";
 import { getSalesEconomy } from "@/server/sales";
 import { saleColumns } from "@/components/tables/sales-columns";
 import MonthSelect from "@/components/month-select";
-import dayjs from "dayjs";
 import DataTable from "@/components/tables/data-table";
 
 const EconomyPage = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {

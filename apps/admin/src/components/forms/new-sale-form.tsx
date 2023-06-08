@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { newExternalCost, newSale } from "@/server/mutations/economy";
+import { newSale } from "@/server/mutations/economy";
 import { newSaleSchema } from "@/types/schemas";
 import { NewSaleFormValus } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
