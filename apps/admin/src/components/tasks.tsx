@@ -70,7 +70,7 @@ const Tasks = async () => {
                 <p className="text-sm">Satın aldığın malzemeleri envantere ekleyebilirsin</p>
               </div>
               {inventoryCount <= 0 && (
-                <Link href="/envanter/yeni" className="text-sm font-semibold hover:underline">
+                <Link href="/envanter/malzemeler/yeni" className="text-sm font-semibold hover:underline">
                   <span className="hover:underline lg:hidden">Ekle</span>
                   <span className="hidden hover:underline lg:inline-block">Satın Alım Ekle</span>
                 </Link>
@@ -91,7 +91,7 @@ const Tasks = async () => {
                 <p className="text-sm">Ürettiğin tarifleri daha sonra satmak üzere envanter ekleyebilirsin</p>
               </div>
               {createdItemCount <= 0 && (
-                <Link href="/envanter/yeni" className="text-sm font-semibold hover:underline">
+                <Link href="/envanter/tarifler/yeni" className="text-sm font-semibold hover:underline">
                   <span className="hover:underline lg:hidden">Ekle</span>
                   <span className="hidden hover:underline lg:inline-block">Ürettiklerini Ekle</span>
                 </Link>
@@ -112,7 +112,7 @@ const Tasks = async () => {
                 <p className="text-sm">Daha sonra bu ürettiklerinin satışını ekleyebilirsin</p>
               </div>
               {saleCount <= 0 && (
-                <Link href="/satis/yeni" className="text-sm font-semibold">
+                <Link href="/ekonomi/satis/yeni" className="text-sm font-semibold">
                   <span className="hover:underline lg:hidden">Ekle</span>
                   <span className="hidden hover:underline lg:inline-block">Satış Ekle</span>
                 </Link>
