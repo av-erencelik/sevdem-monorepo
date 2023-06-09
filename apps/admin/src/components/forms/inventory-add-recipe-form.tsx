@@ -68,7 +68,7 @@ const InventoryAddRecipeForm = ({
   });
   return (
     <Form {...form}>
-      {recipes.length ? (
+      {recipes.length === 0 ? (
         <div className="space-y-3">
           <TypographyH3 classname="text-xl font-semibold">İlk önce tarif eklemelisin</TypographyH3>
           <TypographyP classname="text-muted-foreground">
