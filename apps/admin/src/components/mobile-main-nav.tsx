@@ -53,7 +53,7 @@ const MobileMainNav = () => {
           Envanter
         </Link>
         <Link
-          href="/envanter"
+          href="/ekonomi"
           className={cn(
             "mr-3 px-2 py-3 transition-colors",
             pathname?.startsWith("/ekonomi") || pathname?.startsWith("/satis")
