@@ -93,7 +93,7 @@ model InventorySubtract {
 
   @@index([inventoryId])
   @@index([unitId])
-  @@map("invetory_subtract")
+  @@map("inventory_subtract")
 }
 
 model Measurement {
