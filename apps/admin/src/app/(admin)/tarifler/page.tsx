@@ -29,7 +29,7 @@ const RecipesPage = async () => {
           columns={columns}
           title="Daha önce bir tarif eklememişsiniz"
           href="/tarifler/yeni"
-          buttonText="Yeni Malzeme Ekle"
+          buttonText="Yeni Tarif Ekle"
         />
       </div>
     </div>

@@ -28,7 +28,7 @@ const InventoryRecipesPage = async () => {
           columns={columns}
           buttonText="Yeni Stok Ekle"
           href="/envanter/tarifler/yeni"
-          title="Daha önce bir tarif eklememişsiniz."
+          title="Daha önce bir ürün stoğu eklememişsiniz."
         />
       </div>
     </div>

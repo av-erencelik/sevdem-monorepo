@@ -6,7 +6,7 @@ import { NewRecipeSchema } from "@/types/schemas";
 import { NewRecipeFormValues } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MeasurementType, MeasurementUnit } from "@prisma/client";
-import { Loader2, Plus, Trash, X } from "lucide-react";
+import { Loader2, Plus, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
@@ -38,7 +38,6 @@ import {
   SelectValue,
   Textarea,
   TypographyH3,
-  TypographyH4,
   TypographyP,
 } from "ui";
 

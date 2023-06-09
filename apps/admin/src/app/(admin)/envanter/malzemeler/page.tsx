@@ -28,7 +28,7 @@ const IngredientsInventoryPage = async () => {
         <DataTable
           data={ingredients}
           columns={columns}
-          title="Daha önce bir malzeme eklememişsiniz."
+          title="Daha önce bir malzeme stoğu eklememişsiniz."
           href="/envanter/malzemeler/yeni"
           buttonText="Yeni Stok Ekle"
         />

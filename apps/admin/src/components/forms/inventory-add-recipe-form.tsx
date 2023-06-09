@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { MeasurementType, MeasurementUnit } from "@prisma/client";
 import dayjs from "dayjs";
 import "dayjs/locale/tr";
-import { CalendarIcon, Loader2, Plus, Trash, X } from "lucide-react";
+import { CalendarIcon, Loader2, Plus, X } from "lucide-react";
 import Link from "next/link";
 import React, { useTransition } from "react";
 import { useFieldArray, useForm } from "react-hook-form";

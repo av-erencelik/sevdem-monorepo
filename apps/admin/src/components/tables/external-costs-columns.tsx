@@ -3,7 +3,6 @@ import { ExternalCosts } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import Link from "next/link";
 import { Button } from "ui";
 import "dayjs/locale/tr";
 import { useTransition } from "react";
