@@ -1,51 +1,41 @@
-# Turborepo Tailwind CSS starter
+# Sevdem-Monorepo
 
-This is an official starter Turborepo.
+## Description
 
-## Using this example
+Sevdem Monorepo is created for Sevdem Homemade Sourdough Bread business, Monorepo contains two different apps, One for landing page for displaying products, Other one is admin dashboard for business. Admin Dashboard is a web application designed to help calculate the cost of recipes and track expenses for ingredients. It allows users to enter ingredient details, such as prices and measurements, and create recipes with ingredient quantities. The app then calculates the total cost of each recipe and provides visualizations of cost breakdowns. (Landing page doesn't implemented yet.)
 
-Run the following command:
+## Features
 
-```sh
-npx create-turbo@latest -e with-tailwind
-```
+- Enter ingredient details (price, measurement) and create recipes with quantities.
+- Calculate the cost of each recipe based on ingredient prices.
+- Visualize the cost breakdown of recipes using pie charts.
+- Track ingredient costs and update prices as needed.
+- Monitor recipe costs and adjust prices based on market fluctuations.
+- Maintain a history of ingredient prices and recipe costs.
+- Add recipes to the app's inventory and track ingredient stock levels.
+- Generate reports on recipe costs, profits, and expenses.
 
-## What's inside?
+## Technologies Used
 
-This Turborepo includes the following packages/apps:
+- Frontend: [React](https://react.dev), [Nivo](https://nivo.rocks/), [Shadcn UI](https://ui.shadcn.com/)
+- Backend: [Prisma](https://www.prisma.io/), [Planetscale](https://planetscale.com/)
+- Authentication: [Clerk](https://clerk.com/)
+- Deployment: [Vercel](https://vercel.com/)
 
-### Apps and Packages
+## Installation
 
-- `docs`: a [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
-- `web`: another [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
-- `ui`: a stub React component library with [Tailwind CSS](https://tailwindcss.com/) shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+1. Clone the repository: `git clone https://github.com/av-erencelik/sevdem-monorepo.git`
+2. Navigate to the project directory: `cd sevdem-monorepo`
+3. Install dependencies: `npm install`
+4. Configure environment variables by creating a `.env` file (refer to `.env.example` for required variables)
+5. Start the development server: `npm run dev`
+6. Access the application at `http://localhost:3000` (landing page)
+7. Access the application at `http://localhost:3001` (admin dashboard)
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Contributing
 
-### Building packages/ui
+Contributions to the Recipe Cost Calculator app are welcome! If you find any bugs or have suggestions for new features, please open an issue or submit a pull request.
 
-This example is setup to build `packages/ui` and output the transpiled source and compiled styles to `dist/`. This was chosen to make sharing one `tailwind.config.js` as easy as possible, and to ensure only the CSS that is used by the current application and its dependencies is generated.
+## License
 
-Another option is to consume `packages/ui` directly from source without building. If using this option, you will need to update your `tailwind.config.js` to be aware of your package locations, so it can find all usages of the `tailwindcss` class names.
-
-For example, in [tailwind.config.js](packages/tailwind-config/tailwind.config.js):
-
-```js
-  content: [
-    // app content
-    `src/**/*.{js,ts,jsx,tsx}`,
-    // include packages if not transpiling
-    "../../packages/**/*.{js,ts,jsx,tsx}",
-  ],
-```
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [Tailwind CSS](https://tailwindcss.com/) for styles
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
