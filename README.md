@@ -39,3 +39,11 @@ Contributions to the Recipe Cost Calculator app are welcome! If you find any bug
 ## License
 
 This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
+
+## Screenshots
+
+[![Screenshot-Capture-2023-06-10-12-47-42.png](https://i.postimg.cc/6QYvxCZh/Screenshot-Capture-2023-06-10-12-47-42.png)](https://postimg.cc/8Ff5hJtF)
+[![Screenshot-Capture-2023-06-10-12-48-07.png](https://i.postimg.cc/44rw0Tsx/Screenshot-Capture-2023-06-10-12-48-07.png)](https://postimg.cc/CdsjZXR3)
+[![Screenshot-Capture-2023-06-10-12-48-45.png](https://i.postimg.cc/YjK4zRct/Screenshot-Capture-2023-06-10-12-48-45.png)](https://postimg.cc/7J9YxgYR)
+[![Screenshot-Capture-2023-06-10-12-49-19.png](https://i.postimg.cc/667YzQsP/Screenshot-Capture-2023-06-10-12-49-19.png)](https://postimg.cc/hhBLtct8)
+[![Screenshot-Capture-2023-06-10-12-49-36.png](https://i.postimg.cc/L5ZYP7by/Screenshot-Capture-2023-06-10-12-49-36.png)](https://postimg.cc/p5RLb0x8)
