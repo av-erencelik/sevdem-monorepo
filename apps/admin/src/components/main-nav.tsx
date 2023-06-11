@@ -46,7 +46,7 @@ const MainNav = () => {
           Envanter
         </Link>
         <Link
-          href="/envanter"
+          href="/ekonomi"
           className={cn(
             "rounded-md p-2 transition-colors",
             pathname?.startsWith("/ekonomi") || pathname?.startsWith("/satis")
